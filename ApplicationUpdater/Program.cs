@@ -13,7 +13,7 @@ namespace ApplicationUpdater
         {
             var logger = LogManager.GetLogger("ApplicationUpdater");
 
-            var iISAplicationUpdater = new IISAplicationUpdater(new SelgrosApplicationUpdateStrategy(logger),logger);
+            var iISAplicationUpdater = new IISAplicationUpdater(new SelgrosApplicationUpdateStrategy(logger), logger);
 
             try
             {

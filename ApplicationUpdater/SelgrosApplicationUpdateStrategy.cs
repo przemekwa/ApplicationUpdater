@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using ApplicationUpdater.ProcessEvetns;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,16 @@ using System.Threading.Tasks;
 
 namespace ApplicationUpdater
 {
-    public class SelgrosApplicationUpdateStrategy : IUpdateStrategy
+    public class SelgrosApplicationUpdateStrategy : IUpdateProcess
     {
         public ILogger Logger { get; private set; }
 
-        public SelgrosApplicationUpdateStrategy(ILogger logger)
-        {
-            Logger = logger;
-        }
-
         public void CheckVersion(UpdateModel updateModel)
         {
-            throw new NotImplementedException();
+            var t = new UnZipEvent();
+
+            t.Process(updateModel);
+            
         }
 
         public void CopyFiles(UpdateModel updateModel)

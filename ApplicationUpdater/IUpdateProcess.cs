@@ -1,6 +1,6 @@
 ﻿namespace ApplicationUpdater
 {
-    public interface IUpdateStrategy
+    public interface IUpdateProcess
     {
         void Unzip(UpdateModel updateModel);
         void CheckVersion(UpdateModel updateModel);
