@@ -37,6 +37,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,8 +49,10 @@
   <ItemGroup>
     <Compile Include="IISAplicationUpdater.cs" />
     <Compile Include="IUpdateProcess.cs" />
+    <Compile Include="ProcessEvetns\CheckVersionEvent.cs" />
     <Compile Include="ProcessEvetns\IProcessEvent.cs" />
     <Compile Include="ProcesEventResult.cs" />
+    <Compile Include="ProcessEvetns\ProcessBase.cs" />
     <Compile Include="ProcessEvetns\UnZipEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

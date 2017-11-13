@@ -15,13 +15,21 @@ namespace ApplicationUpdater
         {
             var logger = LogManager.GetLogger("ApplicationUpdater");
 
-            var iISAplicationUpdater = new IISAplicationUpdater(new SelgrosApplicationUpdateStrategy(logger), logger);
-
             try
             {
-                var updateModel= GetUpdateModel(args);
+                ConsoleEvent("Aktualizacja aplikacji", null);
+
+                var updateModel = GetUpdateModel(args);
+
+                ConsoleEvent("Przygotowywanie modelu", null);
 
                 PrepareEnviroment(updateModel);
+
+                var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(logger);
+
+                selgrosApplicationUpdateStrategy.UpdateEvent += ConsoleEvent;
+
+                var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy, logger);
 
                 iISAplicationUpdater.Update(updateModel);
             }
@@ -36,6 +44,16 @@ namespace ApplicationUpdater
             Console.ReadKey();
         }
 
+        public static string GetStopWatchString(DateTime ts)
+        {
+            return $"{ts.Hour:00}:{ts.Minute:00}:{ts.Second:00}:{(ts.Millisecond / 10):00}";
+        }
+
+        private static void ConsoleEvent(object sender, EventArgs e)
+        {
+            Console.WriteLine($"{GetStopWatchString(DateTime.Now)}...{(string)sender}.");
+        }
+
         private static void PrepareEnviroment(UpdateModel updateModel)
         {
             var index = 0;
@@ -48,6 +66,8 @@ namespace ApplicationUpdater
             }
 
             Directory.CreateDirectory(backupDirectoryPath);
+
+            updateModel.BackupDirectory = backupDirectoryPath;
         }
 
         private static string GetBackupPath(UpdateModel updateModel, int index)
@@ -57,7 +77,7 @@ namespace ApplicationUpdater
 
         private static UpdateModel GetUpdateModel(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length != 3)
             {
                 throw new ArgumentException("Brak odpowiednich parametrów");
             }
@@ -65,7 +85,8 @@ namespace ApplicationUpdater
             var updateModel = new UpdateModel
             {
                 PathToZipFile = GetParam(args, 0, "PathToZipFile"),
-                BackupDirectory = GetParam(args, 1, "BackupDirectory")
+                BackupDirectory = GetParam(args, 1, "BackupDirectory"),
+                IntepubDirectory = GetParam(args, 2, "IntepubDirectory")
             };
 
             return updateModel;

@@ -8,5 +8,7 @@
         void CopyFiles(UpdateModel updateModel);
         void VerifyCopy(UpdateModel updateModel);
         void CreateReport(UpdateModel updateModel);
+
+        event System.EventHandler UpdateEvent;
     }
 }

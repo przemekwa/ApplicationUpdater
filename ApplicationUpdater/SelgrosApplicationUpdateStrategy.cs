@@ -17,12 +17,15 @@ namespace ApplicationUpdater
             Logger = logger;
         }
 
+        public event EventHandler UpdateEvent;
+
         public void CheckVersion(UpdateModel updateModel)
         {
-            var t = new UnZipEvent();
+            var checkVersionEvent = new CheckVersionEvent();
 
-            t.Process(updateModel);
-            
+            checkVersionEvent.ProcessEvent += ProcessEvent;
+
+            checkVersionEvent.Process(updateModel);
         }
 
         public void CopyFiles(UpdateModel updateModel)
@@ -32,7 +35,7 @@ namespace ApplicationUpdater
 
         public void CreateReport(UpdateModel updateModel)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public void MakeBackup(UpdateModel updateModel)
@@ -42,7 +45,22 @@ namespace ApplicationUpdater
 
         public void Unzip(UpdateModel updateModel)
         {
-            throw new NotImplementedException();
+            var unZipEvent = new UnZipEvent();
+
+            unZipEvent.ProcessEvent += ProcessEvent;
+
+            var result = unZipEvent.Process(updateModel);
+
+            if (!result.Result)
+            {
+                throw new Exception("Błąd w unZip");
+            }
+        }
+
+        private void ProcessEvent(object sender, EventArgs e)
+        {
+            
+            UpdateEvent(sender, new EventArgs());
         }
 
         public void VerifyCopy(UpdateModel updateModel)

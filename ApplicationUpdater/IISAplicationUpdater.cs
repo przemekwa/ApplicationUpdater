@@ -29,6 +29,8 @@ namespace ApplicationUpdater
 
                 SelgrosApplicationUpdateStrategy.MakeBackup(updateModel);
 
+
+
                 SelgrosApplicationUpdateStrategy.CopyFiles(updateModel);
 
                 SelgrosApplicationUpdateStrategy.VerifyCopy(updateModel);
@@ -38,5 +40,7 @@ namespace ApplicationUpdater
                 SelgrosApplicationUpdateStrategy.CreateReport(updateModel);
             }
         }
+
+      
     }
 }
