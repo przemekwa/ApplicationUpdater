@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,30 +9,33 @@ namespace ApplicationUpdater
 {
     public class IISAplicationUpdater
     {
-        public void Update(UpdateModel updateModel, IUpdateStrategy updateStrategy)
+        public IUpdateStrategy UpdateStrategy { get; private set; }
+        public ILogger Logger { get; private set; }
+
+        public IISAplicationUpdater(IUpdateStrategy updateStrategy, ILogger logger)
+        {
+            UpdateStrategy = updateStrategy;
+            Logger = logger;
+        }
+
+        public void Update(UpdateModel updateModel)
         {
             try
             {
-                updateStrategy.Unzip(updateModel);
+                UpdateStrategy.Unzip(updateModel);
 
-                updateStrategy.CheckVersion(updateModel);
+                UpdateStrategy.CheckVersion(updateModel);
 
-                updateStrategy.MakeBackup(updateModel);
+                UpdateStrategy.MakeBackup(updateModel);
 
-                updateStrategy.CopyFiles(updateModel);
+                UpdateStrategy.CopyFiles(updateModel);
 
-                updateStrategy.VerifyCopy(updateModel);
-            }
-            catch (Exception e)
-            {
-                
+                UpdateStrategy.VerifyCopy(updateModel);
             }
             finally
             {
-                updateModel.CreateReport(updateModel);
+                UpdateStrategy.CreateReport(updateModel);
             }
-
-
         }
     }
 }
