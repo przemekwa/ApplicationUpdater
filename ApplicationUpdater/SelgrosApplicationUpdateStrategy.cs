@@ -1,4 +1,4 @@
-﻿using ApplicationUpdater.ProcessEvetns;
+﻿using ApplicationUpdater.Processes;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace ApplicationUpdater
 
         public void CheckVersion(UpdateModel updateModel)
         {
-            var checkVersionEvent = new CheckVersionEvent();
+            var checkVersionEvent = new CheckVersionProcess();
 
             checkVersionEvent.ProcessEvent += ProcessEvent;
 
@@ -40,12 +40,16 @@ namespace ApplicationUpdater
 
         public void MakeBackup(UpdateModel updateModel)
         {
-            throw new NotImplementedException();
+            var backupProcess = new BackupProcess();
+
+            backupProcess.ProcessEvent += ProcessEvent;
+
+            backupProcess.Process(updateModel);
         }
 
         public void Unzip(UpdateModel updateModel)
         {
-            var unZipEvent = new UnZipEvent();
+            var unZipEvent = new UnZipProcess();
 
             unZipEvent.ProcessEvent += ProcessEvent;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationUpdater.ProcessEvetns
+namespace ApplicationUpdater.Processes
 {
     public abstract class ProcessBase
     {

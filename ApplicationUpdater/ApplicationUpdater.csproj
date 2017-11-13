@@ -49,11 +49,12 @@
   <ItemGroup>
     <Compile Include="IISAplicationUpdater.cs" />
     <Compile Include="IUpdateProcess.cs" />
-    <Compile Include="ProcessEvetns\CheckVersionEvent.cs" />
-    <Compile Include="ProcessEvetns\IProcessEvent.cs" />
+    <Compile Include="Processes\BackupProcess.cs" />
+    <Compile Include="Processes\CheckVersionProcess.cs" />
+    <Compile Include="IProcess.cs" />
     <Compile Include="ProcesEventResult.cs" />
-    <Compile Include="ProcessEvetns\ProcessBase.cs" />
-    <Compile Include="ProcessEvetns\UnZipEvent.cs" />
+    <Compile Include="Processes\ProcessBase.cs" />
+    <Compile Include="Processes\UnZipProcess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateModel.cs" />

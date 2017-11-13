@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationUpdater.ProcessEvetns
+namespace ApplicationUpdater.Processes
 {
-    public class UnZipEvent: ProcessBase, IProcessEvent<UpdateModel>
+    public class UnZipProcess: ProcessBase, IProcess<UpdateModel>
     {
         public ProcesEventResult Process(UpdateModel model)
         {
@@ -25,6 +25,7 @@ namespace ApplicationUpdater.ProcessEvetns
             UpdateProcess($"Koniec wypakowywania");
 
             model.BackupDirectory = "D:\\13-11-2017\\5\\";
+            model.UnZipDirectory = unZipDirectory;
 
             return new ProcesEventResult
             {

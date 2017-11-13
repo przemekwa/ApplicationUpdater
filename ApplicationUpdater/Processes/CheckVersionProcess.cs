@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationUpdater.ProcessEvetns
+namespace ApplicationUpdater.Processes
 {
-    public class CheckVersionEvent: ProcessBase, IProcessEvent<UpdateModel>
+    public class CheckVersionProcess: ProcessBase, IProcess<UpdateModel>
     {
         public ProcesEventResult Process(UpdateModel model)
         {
