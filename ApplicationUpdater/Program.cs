@@ -1,6 +1,8 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +19,11 @@ namespace ApplicationUpdater
 
             try
             {
-                Validate(args);
+                var updateModel= GetUpdateModel(args);
 
-                iISAplicationUpdater.Update(new UpdateModel
-                {
+                PrepareEnviroment(updateModel);
 
-                });
+                iISAplicationUpdater.Update(updateModel);
             }
             catch (Exception e)
             {
@@ -35,9 +36,49 @@ namespace ApplicationUpdater
             Console.ReadKey();
         }
 
-        private static void Validate(string[] args)
+        private static void PrepareEnviroment(UpdateModel updateModel)
         {
-            throw new NotImplementedException();
+            var index = 0;
+
+            var backupDirectoryPath = GetBackupPath(updateModel, index);
+            
+            while (Directory.Exists(backupDirectoryPath))
+            {
+                backupDirectoryPath = GetBackupPath(updateModel, ++index);
+            }
+
+            Directory.CreateDirectory(backupDirectoryPath);
+        }
+
+        private static string GetBackupPath(UpdateModel updateModel, int index)
+        {
+            return Path.Combine(updateModel.BackupDirectory, DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture), index.ToString());
+        }
+
+        private static UpdateModel GetUpdateModel(string[] args)
+        {
+            if (args.Length != 2)
+            {
+                throw new ArgumentException("Brak odpowiednich parametrów");
+            }
+
+            var updateModel = new UpdateModel
+            {
+                PathToZipFile = GetParam(args, 0, "PathToZipFile"),
+                BackupDirectory = GetParam(args, 1, "BackupDirectory")
+            };
+
+            return updateModel;
+        }
+
+        private static string GetParam(string[] args, int index, string name)
+        {
+            if (string.IsNullOrEmpty(args[index]))
+            {
+                throw new ArgumentException(name);
+            }
+
+            return args[index];
         }
     }
 }

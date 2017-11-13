@@ -4,9 +4,7 @@ namespace ApplicationUpdater
 {
     public class UpdateModel
     {
-        internal void CreateReport(UpdateModel updateModel)
-        {
-            throw new NotImplementedException();
-        }
+        public string PathToZipFile { get; internal set; }
+        public string BackupDirectory { get; internal set; }
     }
 }

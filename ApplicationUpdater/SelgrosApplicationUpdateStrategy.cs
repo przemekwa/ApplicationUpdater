@@ -12,6 +12,11 @@ namespace ApplicationUpdater
     {
         public ILogger Logger { get; private set; }
 
+        public SelgrosApplicationUpdateStrategy(ILogger logger)
+        {
+            Logger = logger;
+        }
+
         public void CheckVersion(UpdateModel updateModel)
         {
             var t = new UnZipEvent();
