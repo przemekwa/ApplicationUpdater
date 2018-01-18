@@ -1,0 +1,1 @@
+ApplicationUpdater.exe "D:\Pobrane\Selgros_PG_SPG_QAS_PL_478_artifacts.zip" "D:/" "D:\Projects\Selgros\PG\trunk\SelgrosPG.Presentation\bin\Release\PublishOutput\\" 96.4111

@@ -48,11 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IISAplicationUpdater.cs" />
-    <Compile Include="IUpdateProcess.cs" />
+    <Compile Include="Processes\IUpdateProcess.cs" />
     <Compile Include="Processes\BackupProcess.cs" />
     <Compile Include="Processes\CheckVersionProcess.cs" />
-    <Compile Include="IProcess.cs" />
-    <Compile Include="ProcesEventResult.cs" />
+    <Compile Include="Processes\IProcess.cs" />
+    <Compile Include="Processes\ProcesEventResult.cs" />
     <Compile Include="Processes\CopyFilesProcess.cs" />
     <Compile Include="Processes\EditWebConfig.cs" />
     <Compile Include="Processes\ProcessBase.cs" />

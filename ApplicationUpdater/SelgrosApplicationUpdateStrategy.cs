@@ -35,11 +35,11 @@ namespace ApplicationUpdater
             copyfilesProcess.ProcessEvent += ProcessEvent;
 
             copyfilesProcess.Process(updateModel);
-
         }
 
         public void CreateReport(UpdateModel updateModel)
         {
+            UpdateEvent("Koniec", new EventArgs { });
             return;
         }
 
