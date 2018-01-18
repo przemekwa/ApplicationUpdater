@@ -9,5 +9,6 @@ namespace ApplicationUpdater
         public DirectoryInfo BackupDirectory { get; internal set; }
         public DirectoryInfo IntepubDirectory { get; internal set; }
         public DirectoryInfo UnZipDirectory { get; internal set; }
+        public DirectoryInfo NewApplicationDirectory { get; internal set; }
     }
 }

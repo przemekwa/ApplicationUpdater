@@ -11,7 +11,7 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            CopyAll(new DirectoryInfo(Path.Combine(model.BackupDirectory.FullName, "app\\")), new DirectoryInfo( model.IntepubDirectory.FullName), true, "Updateing files: {0}");
+            CopyAll(model.NewApplicationDirectory, model.IntepubDirectory, true, "Updateing files: {0}");
 
             return null;
         }
