@@ -82,19 +82,41 @@ namespace ApplicationUpdater
 
         }
 
+        public void PrepareEnviroment(UpdateModel updateModel)
+        {
+            var prepare = new PrepareEnviroment();
+
+            prepare.ProcessEvent += ProcessEvent;
+
+            prepare.Process(updateModel);
+
+        }
+
         public void Update(UpdateModel updateModel)
         {
-            this.Unzip(updateModel);
+            ExecuteProcess(new List<Action<UpdateModel>>
+            {
+                PrepareEnviroment,
+                Unzip,
+                CheckVersion,
+                MakeBackup,
+                CopyFiles,
+                VerifyCopy,
+                EditWebConfig
+            }, updateModel);
+        }
 
-            this.CheckVersion(updateModel);
-
-            this.MakeBackup(updateModel);
-
-            this.CopyFiles(updateModel);
-
-            this.VerifyCopy(updateModel);
-
-            this.EditWebConfig(updateModel);
+        private void ExecuteProcess(IEnumerable<Action<UpdateModel>> actions, UpdateModel updateModel)
+        {
+            foreach (var action in actions)
+            {
+                UpdateEvent("------------------", new EventArgs { });
+                UpdateEvent($"--> START {action.Method.Name} ", new EventArgs { });
+                UpdateEvent($"", new EventArgs { });
+                action.Invoke(updateModel);
+                UpdateEvent($"", new EventArgs { });
+                UpdateEvent($"--> STOP {action.Method.Name} ", new EventArgs { });
+            }
         }
     }
 }

@@ -23,8 +23,6 @@ namespace ApplicationUpdater
 
                 ConsoleEvent("Przygotowywanie modelu", null);
 
-                PrepareEnviroment(updateModel);
-
                 var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(logger);
 
                 selgrosApplicationUpdateStrategy.UpdateEvent += ConsoleEvent;
@@ -40,6 +38,8 @@ namespace ApplicationUpdater
                 Console.WriteLine($"Wystąpił błąd podczas aktualizacji: {e.Message}");
             }
 
+            ConsoleEvent("Aplikacja została zaaktalizowana", null);
+
             Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować...");
             Console.ReadKey();
         }
@@ -54,26 +54,7 @@ namespace ApplicationUpdater
             Console.WriteLine($"{GetStopWatchString(DateTime.Now)}...{(string)sender}.");
         }
 
-        private static void PrepareEnviroment(UpdateModel updateModel)
-        {
-            var index = 0;
-
-            var backupDirectoryPath = GetBackupPath(updateModel, index);
-            
-            while (Directory.Exists(backupDirectoryPath))
-            {
-                backupDirectoryPath = GetBackupPath(updateModel, ++index);
-            }
-
-            Directory.CreateDirectory(backupDirectoryPath);
-
-            updateModel.BackupDirectory = new DirectoryInfo(backupDirectoryPath);
-        }
-
-        private static string GetBackupPath(UpdateModel updateModel, int index)
-        {
-            return Path.Combine(updateModel.BackupDirectory.FullName, DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture), index.ToString());
-        }
+        
 
         private static UpdateModel GetUpdateModel(string[] args)
         {

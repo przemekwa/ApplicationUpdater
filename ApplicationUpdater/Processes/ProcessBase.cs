@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,11 +12,17 @@ namespace ApplicationUpdater.Processes
     {
         public event EventHandler ProcessEvent;
 
+        public ILogger Log { get; set; }
+
+        public ProcessBase()
+        {
+             LogManager.GetLogger(this.GetType().Name);
+        }
+
         protected virtual void UpdateProcess(string msg)
         {
             ProcessEvent(msg, new EventArgs { });
         }
-
 
         protected virtual void CopyAll(DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat)
         {
