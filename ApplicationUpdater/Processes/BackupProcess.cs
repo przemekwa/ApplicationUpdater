@@ -11,9 +11,9 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            var backupDirectory = Directory.CreateDirectory(Path.Combine(model.BackupDirectory, "old-application"));
+            var backupDirectory = Directory.CreateDirectory(Path.Combine(model.BackupDirectory.FullName, "old-application"));
 
-            CopyAll(new DirectoryInfo(model.IntepubDirectory), backupDirectory, false, "Backup file: {0}" );
+            CopyAll(new DirectoryInfo(model.IntepubDirectory.FullName), backupDirectory, false, "Backup file: {0}" );
 
             UpdateProcess($"Backup successful.");
 

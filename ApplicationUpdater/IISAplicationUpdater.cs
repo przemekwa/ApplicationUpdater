@@ -25,10 +25,10 @@ namespace ApplicationUpdater
             {
                 SelgrosApplicationUpdateStrategy.Unzip(updateModel);
 
+
                 SelgrosApplicationUpdateStrategy.CheckVersion(updateModel);
 
                 SelgrosApplicationUpdateStrategy.MakeBackup(updateModel);
-
 
 
                 SelgrosApplicationUpdateStrategy.CopyFiles(updateModel);

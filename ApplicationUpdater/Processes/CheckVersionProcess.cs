@@ -11,13 +11,13 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            var inetpubFiles = Directory.GetFiles(model.IntepubDirectory, "*.*", SearchOption.AllDirectories)
+            var inetpubFiles = Directory.GetFiles(model.IntepubDirectory.FullName, "*.*", SearchOption.AllDirectories)
                 .Select(f => new FileInfo(f));
 
-            var newAppDirectory = model.UnZipDirectory;
+            var newAppDirectory = model.UnZipDirectory.FullName;
 
             var newAppFiles = Directory.GetFiles(newAppDirectory, "*.*", SearchOption.AllDirectories)
-                .Select(f => new FileInfo(f));
+                .Select(s=>new FileInfo(s));
 
             if (!inetpubFiles.Any() || !newAppFiles.Any())
             {
@@ -26,16 +26,15 @@ namespace ApplicationUpdater.Processes
 
             foreach (var inetpubFile in inetpubFiles)
             {
-                var fileNameToCheck = inetpubFile.FullName.Replace(model.IntepubDirectory, "");
+                var fileNameToCheck = inetpubFile.FullName.Replace(model.IntepubDirectory.FullName, string.Empty);
 
-                var file = newAppFiles.SingleOrDefault(s => s.FullName.Replace(newAppDirectory, "") == fileNameToCheck);
+                var file = newAppFiles.SingleOrDefault(s => s.FullName.Replace(model.UnZipDirectory.FullName + "\\app\\", "").Equals(fileNameToCheck, StringComparison.CurrentCultureIgnoreCase));
 
                 if (file == null)
                 {
                     UpdateProcess($"UWAGA! Brak pliku w nowej aplikacji {inetpubFile.FullName}");
                     continue;
                 }
-
 
                 if (inetpubFile.CreationTime >= file.CreationTime)
                 {

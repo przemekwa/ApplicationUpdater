@@ -12,7 +12,7 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            var unZipDirectory = Path.Combine(model.BackupDirectory, "new-application");
+            var unZipDirectory = Path.Combine(model.BackupDirectory.FullName, "new-application");
 
             UpdateProcess($"Tworzenie katalogu do wypakowania {unZipDirectory}");
 
@@ -20,12 +20,11 @@ namespace ApplicationUpdater.Processes
 
             UpdateProcess($"Wypakowywanie");
 
-            ZipFile.ExtractToDirectory(model.PathToZipFile, unZipDirectory);
+            ZipFile.ExtractToDirectory(model.PathToZipFile.FullName, unZipDirectory);
 
             UpdateProcess($"Koniec wypakowywania");
-
-            model.BackupDirectory = "D:\\13-11-2017\\5\\";
-            model.UnZipDirectory = unZipDirectory;
+            
+            model.UnZipDirectory = new DirectoryInfo(unZipDirectory);
 
             return new ProcesEventResult
             {

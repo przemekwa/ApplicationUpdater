@@ -67,12 +67,12 @@ namespace ApplicationUpdater
 
             Directory.CreateDirectory(backupDirectoryPath);
 
-            updateModel.BackupDirectory = backupDirectoryPath;
+            updateModel.BackupDirectory = new DirectoryInfo(backupDirectoryPath);
         }
 
         private static string GetBackupPath(UpdateModel updateModel, int index)
         {
-            return Path.Combine(updateModel.BackupDirectory, DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture), index.ToString());
+            return Path.Combine(updateModel.BackupDirectory.FullName, DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture), index.ToString());
         }
 
         private static UpdateModel GetUpdateModel(string[] args)
@@ -84,9 +84,9 @@ namespace ApplicationUpdater
 
             var updateModel = new UpdateModel
             {
-                PathToZipFile = GetParam(args, 0, "PathToZipFile"),
-                BackupDirectory = GetParam(args, 1, "BackupDirectory"),
-                IntepubDirectory = GetParam(args, 2, "IntepubDirectory")
+                PathToZipFile = new FileInfo( GetParam(args, 0, "PathToZipFile")),
+                BackupDirectory = new DirectoryInfo(GetParam(args, 1, "BackupDirectory")),
+                IntepubDirectory = new DirectoryInfo(GetParam(args, 2, "IntepubDirectory"))
             };
 
             return updateModel;

@@ -1,12 +1,13 @@
 ﻿using System;
+using System.IO;
 
 namespace ApplicationUpdater
 {
     public class UpdateModel
     {
-        public string PathToZipFile { get; internal set; }
-        public string BackupDirectory { get; internal set; }
-        public string IntepubDirectory { get; internal set; }
-        public string UnZipDirectory { get; internal set; }
+        public FileInfo PathToZipFile { get; internal set; }
+        public DirectoryInfo BackupDirectory { get; internal set; }
+        public DirectoryInfo IntepubDirectory { get; internal set; }
+        public DirectoryInfo UnZipDirectory { get; internal set; }
     }
 }
