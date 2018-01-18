@@ -16,11 +16,11 @@ namespace ApplicationUpdater.Processes
 
             UpdateProcess($"Tworzenie katalogu do wypakowania {unZipDirectory}");
 
-            //Directory.CreateDirectory(unZipDirectory);
+            Directory.CreateDirectory(unZipDirectory);
 
             UpdateProcess($"Wypakowywanie");
 
-            //ZipFile.ExtractToDirectory(model.PathToZipFile, unZipDirectory);
+            ZipFile.ExtractToDirectory(model.PathToZipFile, unZipDirectory);
 
             UpdateProcess($"Koniec wypakowywania");
 

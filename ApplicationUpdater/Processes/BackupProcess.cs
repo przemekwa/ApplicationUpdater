@@ -13,29 +13,11 @@ namespace ApplicationUpdater.Processes
         {
             var backupDirectory = Directory.CreateDirectory(Path.Combine(model.BackupDirectory, "old-application"));
 
-            CopyAll(new DirectoryInfo(model.IntepubDirectory), backupDirectory);
+            CopyAll(new DirectoryInfo(model.IntepubDirectory), backupDirectory, false, "Backup file: {0}" );
 
-            UpdateProcess($"backup wykonany pomyślnie");
+            UpdateProcess($"Backup successful.");
 
             return null;
-        }
-
-        public void CopyAll(DirectoryInfo source, DirectoryInfo target)
-        {
-            Directory.CreateDirectory(target.FullName);
-            
-            foreach (FileInfo fi in source.GetFiles())
-            {
-                UpdateProcess($"Backup pliku {fi.Name}");
-
-                fi.CopyTo(Path.Combine(target.FullName, fi.Name), false);
-            }
-
-            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
-            {
-                DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir);
-            }
         }
     }
 }

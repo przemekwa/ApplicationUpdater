@@ -14,7 +14,7 @@ namespace ApplicationUpdater.Processes
             var inetpubFiles = Directory.GetFiles(model.IntepubDirectory, "*.*", SearchOption.AllDirectories)
                 .Select(f => new FileInfo(f));
 
-            var newAppDirectory = Path.Combine(model.BackupDirectory, "new-application", "app\\");
+            var newAppDirectory = model.UnZipDirectory;
 
             var newAppFiles = Directory.GetFiles(newAppDirectory, "*.*", SearchOption.AllDirectories)
                 .Select(f => new FileInfo(f));
@@ -27,7 +27,6 @@ namespace ApplicationUpdater.Processes
             foreach (var inetpubFile in inetpubFiles)
             {
                 var fileNameToCheck = inetpubFile.FullName.Replace(model.IntepubDirectory, "");
-
 
                 var file = newAppFiles.SingleOrDefault(s => s.FullName.Replace(newAppDirectory, "") == fileNameToCheck);
 

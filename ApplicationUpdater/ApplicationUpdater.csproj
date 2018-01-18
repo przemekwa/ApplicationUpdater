@@ -53,6 +53,7 @@
     <Compile Include="Processes\CheckVersionProcess.cs" />
     <Compile Include="IProcess.cs" />
     <Compile Include="ProcesEventResult.cs" />
+    <Compile Include="Processes\CopyFilesProcess.cs" />
     <Compile Include="Processes\ProcessBase.cs" />
     <Compile Include="Processes\UnZipProcess.cs" />
     <Compile Include="Program.cs" />

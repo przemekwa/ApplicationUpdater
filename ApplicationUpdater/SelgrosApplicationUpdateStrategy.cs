@@ -30,7 +30,12 @@ namespace ApplicationUpdater
 
         public void CopyFiles(UpdateModel updateModel)
         {
-            throw new NotImplementedException();
+            var copyfilesProcess = new CopyFilesProcess();
+
+            copyfilesProcess.ProcessEvent += ProcessEvent;
+
+            copyfilesProcess.Process(updateModel);
+
         }
 
         public void CreateReport(UpdateModel updateModel)
@@ -54,11 +59,6 @@ namespace ApplicationUpdater
             unZipEvent.ProcessEvent += ProcessEvent;
 
             var result = unZipEvent.Process(updateModel);
-
-            if (!result.Result)
-            {
-                throw new Exception("Błąd w unZip");
-            }
         }
 
         private void ProcessEvent(object sender, EventArgs e)
