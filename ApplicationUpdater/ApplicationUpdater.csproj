@@ -72,6 +72,7 @@
     <Compile Include="Processes\CopyFilesProcess.cs" />
     <Compile Include="Processes\EditWebConfig.cs" />
     <Compile Include="Processes\ProcessBase.cs" />
+    <Compile Include="Processes\UndoProcess.cs" />
     <Compile Include="Processes\UnZipProcess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

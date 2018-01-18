@@ -63,7 +63,6 @@ namespace ApplicationUpdater
 
         private void ProcessEvent(object sender, EventArgs e)
         {
-            
             UpdateEvent(sender, new EventArgs());
         }
 
@@ -117,6 +116,11 @@ namespace ApplicationUpdater
                 UpdateEvent($"", new EventArgs { });
                 UpdateEvent($"--> STOP {action.Method.Name} ", new EventArgs { });
             }
+        }
+
+        public void Undo(UpdateModel updateModel)
+        {
+            
         }
     }
 }
