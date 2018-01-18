@@ -69,9 +69,32 @@ namespace ApplicationUpdater
 
         public void VerifyCopy(UpdateModel updateModel)
         {
-            throw new NotImplementedException();
+           
         }
 
-        
+        public void EditWebConfig(UpdateModel updateModel)
+        {
+            var editWebConfig = new EditWebConfig();
+
+            editWebConfig.ProcessEvent += ProcessEvent;
+
+            editWebConfig.Process(updateModel);
+
+        }
+
+        public void Update(UpdateModel updateModel)
+        {
+            this.Unzip(updateModel);
+
+            this.CheckVersion(updateModel);
+
+            this.MakeBackup(updateModel);
+
+            this.CopyFiles(updateModel);
+
+            this.VerifyCopy(updateModel);
+
+            this.EditWebConfig(updateModel);
+        }
     }
 }

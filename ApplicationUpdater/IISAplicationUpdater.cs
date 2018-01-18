@@ -9,13 +9,13 @@ namespace ApplicationUpdater
 {
     public class IISAplicationUpdater
     {
-        public IUpdateProcess SelgrosApplicationUpdateStrategy { get; private set; }
+        public IUpdateProcess UpdateProcess { get; private set; }
 
         public ILogger Logger { get; private set; }
 
         public IISAplicationUpdater(IUpdateProcess selgrosApplicationUpdateStrategy, ILogger logger)
         {
-            SelgrosApplicationUpdateStrategy = selgrosApplicationUpdateStrategy;
+            UpdateProcess = selgrosApplicationUpdateStrategy;
             Logger = logger;
         }
 
@@ -23,25 +23,12 @@ namespace ApplicationUpdater
         {
             try
             {
-                SelgrosApplicationUpdateStrategy.Unzip(updateModel);
-
-                SelgrosApplicationUpdateStrategy.CheckVersion(updateModel);
-
-                SelgrosApplicationUpdateStrategy.MakeBackup(updateModel);
-
-                SelgrosApplicationUpdateStrategy.CopyFiles(updateModel);
-
-                SelgrosApplicationUpdateStrategy.VerifyCopy(updateModel);
-
-     
-
+                UpdateProcess.Update(updateModel);
             }
             finally
             {
-                SelgrosApplicationUpdateStrategy.CreateReport(updateModel);
+                UpdateProcess.CreateReport(updateModel);
             }
         }
-
-      
     }
 }

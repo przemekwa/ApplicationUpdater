@@ -10,5 +10,6 @@ namespace ApplicationUpdater
         public DirectoryInfo IntepubDirectory { get; internal set; }
         public DirectoryInfo UnZipDirectory { get; internal set; }
         public DirectoryInfo NewApplicationDirectory { get; internal set; }
+        public string Version { get; internal set; }
     }
 }
