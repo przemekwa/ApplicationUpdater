@@ -58,7 +58,7 @@ namespace ApplicationUpdater
 
         private static UpdateModel GetUpdateModel(string[] args)
         {
-            if (args.Length != 4)
+            if (args.Length != 5)
             {
                 throw new ArgumentException("Brak odpowiednich parametrów");
             }
@@ -68,7 +68,8 @@ namespace ApplicationUpdater
                 PathToZipFile = new FileInfo(GetParam(args, 0, "PathToZipFile")),
                 BackupDirectory = new DirectoryInfo(GetParam(args, 1, "BackupDirectory")),
                 IntepubDirectory = new DirectoryInfo(GetParam(args, 2, "IntepubDirectory")),
-                Version = GetParam(args, 3, "Version")
+                Version = GetParam(args, 3, "Version"),
+                IsUndoProcess =  bool.Parse(GetParam(args, 4, "IsUndoProcess"))
             };
 
             return updateModel;

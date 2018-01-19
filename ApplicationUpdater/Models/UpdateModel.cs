@@ -11,5 +11,7 @@ namespace ApplicationUpdater
         public DirectoryInfo UnZipDirectory { get; internal set; }
         public DirectoryInfo NewApplicationDirectory { get; internal set; }
         public string Version { get; internal set; }
+        public bool IsUndoProcess { get; internal set; }
+        public DirectoryInfo LastBackupPath { get; internal set; }
     }
 }

@@ -91,8 +91,28 @@ namespace ApplicationUpdater
 
         }
 
+        public void UndoProcess(UpdateModel updateModel)
+        {
+            var undoProcess = new UndoProcess();
+
+            undoProcess.ProcessEvent += ProcessEvent;
+
+            undoProcess.Process(updateModel);
+
+        }
+
         public void Update(UpdateModel updateModel)
         {
+            if (updateModel.IsUndoProcess)
+            {
+                ExecuteProcess(new List<Action<UpdateModel>>
+                {
+                    UndoProcess
+                }, updateModel);
+
+                return;
+            }
+
             ExecuteProcess(new List<Action<UpdateModel>>
             {
                 PrepareEnviroment,
@@ -116,11 +136,6 @@ namespace ApplicationUpdater
                 UpdateEvent($"", new EventArgs { });
                 UpdateEvent($"--> STOP {action.Method.Name} ", new EventArgs { });
             }
-        }
-
-        public void Undo(UpdateModel updateModel)
-        {
-            
         }
     }
 }

@@ -12,29 +12,74 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
+            SetLastUpdatePath(model);
+            CopyFromOldApplication(model);
+
+
+
+            return null;
+        }
+
+        private void CopyFromOldApplication(UpdateModel model)
+        {
+            var pathToOldApplication = new DirectoryInfo(Path.Combine(model.LastBackupPath.FullName, "old-application"));
+
+            if (pathToOldApplication.Exists == false)
+            {
+                throw new Exception($"w katalogu {pathToOldApplication} nie ma aplikacji do podmiany");
+            }
+
+            CopyAll(pathToOldApplication, model.IntepubDirectory, true, "Undo {0}");
+        }
+
+        private void SetLastUpdatePath(UpdateModel model)
+        {
             var dateTime = DateTime.Now;
 
             var rootDir = GetBackupPath(model, dateTime);
 
-            while (rootDir.Exists == false)
-            {
-                dateTime = dateTime.AddDays(-1);
+            model.LastBackupPath = new DirectoryInfo("X:/");
 
-                rootDir = GetBackupPath(model, dateTime);
+            while (model.LastBackupPath.Exists == false)
+            {
+                while (rootDir.Exists == false)
+                {
+                    dateTime = dateTime.AddDays(-1);
+
+                    rootDir = GetBackupPath(model, dateTime);
+                }
+
+                int index = GetLastIndex(rootDir);
+
+                if (index < 0)
+                {
+                    continue;
+                }
+
+                var appDir = GetAppDir(rootDir, index);
+
+                if (appDir.Exists == false)
+                {
+                    continue;
+                }
+
+                model.LastBackupPath = appDir;
+            }
+        }
+
+        private int GetLastIndex(DirectoryInfo rootDir)
+        {
+            var files = Directory.GetDirectories(rootDir.FullName);
+
+            if (files.Length == 0)
+            {
+                return -1;
             }
 
-            int index = GetLastIndex
+            string index = files.Last().Substring(files.Last().Length - 1);
 
-            var appDir = GetAppDir(rootDir, index);
+            return int.Parse(index);
 
-            while (appDir.Exists == false)
-            {
-                index--;
-                appDir = GetAppDir(rootDir, index);
-            }
-
-
-            return null;
         }
 
         private DirectoryInfo GetAppDir(DirectoryInfo rootDir, int index)
