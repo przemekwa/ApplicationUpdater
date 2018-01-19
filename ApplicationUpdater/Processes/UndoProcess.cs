@@ -15,14 +15,12 @@ namespace ApplicationUpdater.Processes
             SetLastUpdatePath(model);
             CopyFromOldApplication(model);
 
-
-
             return null;
         }
 
         private void CopyFromOldApplication(UpdateModel model)
         {
-            var pathToOldApplication = new DirectoryInfo(Path.Combine(model.LastBackupPath.FullName, "old-application"));
+            var pathToOldApplication = new DirectoryInfo(Path.Combine(model.OldApplicationDirectory.FullName,  Consts.DirectoriesNames.OldApplication));
 
             if (pathToOldApplication.Exists == false)
             {
@@ -38,9 +36,9 @@ namespace ApplicationUpdater.Processes
 
             var rootDir = GetBackupPath(model, dateTime);
 
-            model.LastBackupPath = new DirectoryInfo("X:/");
+            model.OldApplicationDirectory = new DirectoryInfo("X:/");
 
-            while (model.LastBackupPath.Exists == false)
+            while (model.OldApplicationDirectory.Exists == false)
             {
                 while (rootDir.Exists == false)
                 {
@@ -63,7 +61,7 @@ namespace ApplicationUpdater.Processes
                     continue;
                 }
 
-                model.LastBackupPath = appDir;
+                model.OldApplicationDirectory = appDir;
             }
         }
 
@@ -79,7 +77,6 @@ namespace ApplicationUpdater.Processes
             string index = files.Last().Substring(files.Last().Length - 1);
 
             return int.Parse(index);
-
         }
 
         private DirectoryInfo GetAppDir(DirectoryInfo rootDir, int index)

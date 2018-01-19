@@ -12,7 +12,7 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            var unZipDirectory = Path.Combine(model.BackupDirectory.FullName, "new-application");
+            var unZipDirectory = Path.Combine(model.BackupDirectory.FullName, Consts.DirectoriesNames.NewApplication);
 
             UpdateProcess($"Tworzenie katalogu do wypakowania {unZipDirectory}");
 
