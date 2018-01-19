@@ -25,6 +25,7 @@ namespace ApplicationUpdater
             var checkVersionEvent = new CheckVersionProcess();
 
             checkVersionEvent.ProcessEvent += ProcessEvent;
+            checkVersionEvent.ConfirmEvent += ConfirmEvent;
 
             checkVersionEvent.Process(updateModel);
         }
@@ -34,6 +35,7 @@ namespace ApplicationUpdater
             var copyfilesProcess = new CopyFilesProcess();
 
             copyfilesProcess.ProcessEvent += ProcessEvent;
+            copyfilesProcess.ConfirmEvent += ConfirmEvent;
 
             copyfilesProcess.Process(updateModel);
         }
@@ -49,6 +51,7 @@ namespace ApplicationUpdater
             var backupProcess = new BackupProcess();
 
             backupProcess.ProcessEvent += ProcessEvent;
+            backupProcess.ConfirmEvent += ConfirmEvent;
 
             backupProcess.Process(updateModel);
         }
@@ -58,6 +61,7 @@ namespace ApplicationUpdater
             var unZipEvent = new UnzipProcess();
 
             unZipEvent.ProcessEvent += ProcessEvent;
+            unZipEvent.ConfirmEvent += ConfirmEvent;
 
             var result = unZipEvent.Process(updateModel);
         }
@@ -77,6 +81,7 @@ namespace ApplicationUpdater
             var editWebConfig = new EditWebConfigProcess();
 
             editWebConfig.ProcessEvent += ProcessEvent;
+            editWebConfig.ConfirmEvent += ConfirmEvent;
 
             editWebConfig.Process(updateModel);
 
@@ -87,6 +92,7 @@ namespace ApplicationUpdater
             var prepare = new PrepareEnviroment();
 
             prepare.ProcessEvent += ProcessEvent;
+            prepare.ConfirmEvent += ConfirmEvent;
 
             prepare.Process(updateModel);
 
