@@ -13,6 +13,12 @@ namespace ApplicationUpdater.Processes
         public ProcesEventResult Process(UpdateModel model)
         {
             SetLastUpdatePath(model);
+
+            if (Confirm($"Czy chcesz cofnąć aplikację do versji z katalogu {model.OldApplicationDirectory}?") == false)
+            {
+                return null;
+            }
+
             CopyFromOldApplication(model);
 
             return null;

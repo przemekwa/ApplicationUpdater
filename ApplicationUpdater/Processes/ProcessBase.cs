@@ -11,12 +11,25 @@ namespace ApplicationUpdater.Processes
     public abstract class ProcessBase
     {
         public event EventHandler ProcessEvent;
+        public event EventHandler ConfirmEvent;
 
         public ILogger Log { get; set; }
 
         public ProcessBase()
         {
              LogManager.GetLogger(this.GetType().Name);
+        }
+
+        protected virtual bool Confirm(string question)
+        {
+            var processConfirmation = new ProcessConfirmation
+            {
+                Question = question
+            };
+
+            ConfirmEvent(processConfirmation, new EventArgs());
+
+            return processConfirmation.Key == ConsoleKey.Y;
         }
 
         protected virtual void UpdateProcess(string msg)

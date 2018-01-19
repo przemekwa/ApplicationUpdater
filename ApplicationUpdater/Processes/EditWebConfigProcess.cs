@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace ApplicationUpdater.Processes
 {
-    public class EditWebConfig : ProcessBase, IProcess<UpdateModel>
+    public class EditWebConfigProcess : ProcessBase, IProcess<UpdateModel>
     {
         public ProcesEventResult Process(UpdateModel model)
         {

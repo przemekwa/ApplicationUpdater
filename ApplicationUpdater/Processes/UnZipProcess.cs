@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationUpdater.Processes
 {
-    public class UnZipProcess: ProcessBase, IProcess<UpdateModel>
+    public class UnzipProcess: ProcessBase, IProcess<UpdateModel>
     {
         public ProcesEventResult Process(UpdateModel model)
         {

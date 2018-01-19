@@ -26,7 +26,7 @@ namespace ApplicationUpdater
                 UpdateProcess.Update(updateModel);
             }
             finally
-                {
+            {
                 UpdateProcess.CreateReport(updateModel);
             }
         }

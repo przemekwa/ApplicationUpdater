@@ -17,7 +17,8 @@ namespace ApplicationUpdater
             Logger = logger;
         }
 
-        public event EventHandler UpdateEvent;
+        public event EventHandler UpdateEvent; 
+        public event EventHandler ConfirmEvent;
 
         public void CheckVersion(UpdateModel updateModel)
         {
@@ -54,7 +55,7 @@ namespace ApplicationUpdater
 
         public void Unzip(UpdateModel updateModel)
         {
-            var unZipEvent = new UnZipProcess();
+            var unZipEvent = new UnzipProcess();
 
             unZipEvent.ProcessEvent += ProcessEvent;
 
@@ -73,7 +74,7 @@ namespace ApplicationUpdater
 
         public void EditWebConfig(UpdateModel updateModel)
         {
-            var editWebConfig = new EditWebConfig();
+            var editWebConfig = new EditWebConfigProcess();
 
             editWebConfig.ProcessEvent += ProcessEvent;
 
@@ -96,6 +97,7 @@ namespace ApplicationUpdater
             var undoProcess = new UndoProcess();
 
             undoProcess.ProcessEvent += ProcessEvent;
+            undoProcess.ConfirmEvent += ConfirmEvent;
 
             undoProcess.Process(updateModel);
 

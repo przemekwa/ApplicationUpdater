@@ -71,10 +71,11 @@
     <Compile Include="Processes\PrepareEnviroment.cs" />
     <Compile Include="Processes\ProcesEventResult.cs" />
     <Compile Include="Processes\CopyFilesProcess.cs" />
-    <Compile Include="Processes\EditWebConfig.cs" />
+    <Compile Include="Processes\EditWebConfigProcess.cs" />
     <Compile Include="Processes\ProcessBase.cs" />
+    <Compile Include="Processes\ProcessConfirmation.cs" />
     <Compile Include="Processes\UndoProcess.cs" />
-    <Compile Include="Processes\UnZipProcess.cs" />
+    <Compile Include="Processes\UnzipProcess.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\UpdateModel.cs" />

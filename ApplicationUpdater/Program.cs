@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using ApplicationUpdater.Processes;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,9 +16,10 @@ namespace ApplicationUpdater
         {
             var logger = LogManager.GetLogger("ApplicationUpdater");
 
+            ConsoleEvent("Aktualizacja aplikacji", null);
+
             try
             {
-                ConsoleEvent("Aktualizacja aplikacji", null);
 
                 var updateModel = GetUpdateModel(args);
 
@@ -26,6 +28,7 @@ namespace ApplicationUpdater
                 var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(logger);
 
                 selgrosApplicationUpdateStrategy.UpdateEvent += ConsoleEvent;
+                selgrosApplicationUpdateStrategy.ConfirmEvent += GetConfirmation;
 
                 var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy, logger);
 
@@ -54,7 +57,33 @@ namespace ApplicationUpdater
             Console.WriteLine($"{GetStopWatchString(DateTime.Now)}...{(string)sender}.");
         }
 
-        
+        private static void GetConfirmation(object sender, EventArgs e)
+        {
+            var pc = (ProcessConfirmation)sender;
+
+            Console.WriteLine(pc.Question);
+
+            var allowKeys = new List<ConsoleKey>
+            {
+                ConsoleKey.Y,
+                ConsoleKey.N,
+                ConsoleKey.C
+            };
+
+            var key = ConsoleKey.Clear;
+
+            while (allowKeys.Contains(key) == false)
+            {
+                key = Console.ReadKey().Key;
+            }
+
+            if (key == ConsoleKey.C)
+            {
+                Environment.Exit(0);
+            }
+
+            pc.Key = key;
+        }
 
         private static UpdateModel GetUpdateModel(string[] args)
         {

@@ -6,5 +6,6 @@ namespace ApplicationUpdater
     {
         ProcesEventResult Process(T model);
         event EventHandler ProcessEvent;
+        event EventHandler ConfirmEvent;
     }
 }
