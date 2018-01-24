@@ -63,7 +63,6 @@ namespace ApplicationUpdater
 
         public void CreateReport(UpdateModel updateModel)
         {
-            UpdateEvent("Koniec", new EventArgs { });
             return;
         }
 
@@ -136,7 +135,9 @@ namespace ApplicationUpdater
             {
                 ExecuteProcess(new List<Action<UpdateModel>>
                 {
-                    UndoProcess
+                    SetOffline,
+                    UndoProcess,
+                    SetOnline
                 }, updateModel);
 
                 return;

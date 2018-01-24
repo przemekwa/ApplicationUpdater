@@ -14,16 +14,12 @@ namespace ApplicationUpdater.Processes
         {
             var unZipDirectory = Path.Combine(model.BackupDirectory.FullName, Consts.DirectoriesNames.NewApplication);
 
-            UpdateProcess($"Tworzenie katalogu do wypakowania {unZipDirectory}");
-
             Directory.CreateDirectory(unZipDirectory);
 
-            UpdateProcess($"Wypakowywanie");
+            UpdateProcess($"Wypakowywanie {model.PathToZipFile.FullName} do {unZipDirectory}");
 
             ZipFile.ExtractToDirectory(model.PathToZipFile.FullName, unZipDirectory);
 
-            UpdateProcess($"Koniec wypakowywania");
-            
             model.UnZipDirectory = new DirectoryInfo(unZipDirectory);
 
             model.NewApplicationDirectory = new DirectoryInfo(Path.Combine(model.UnZipDirectory.FullName, "app"));

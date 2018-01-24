@@ -14,7 +14,7 @@ namespace ApplicationUpdater.Processes
         {
             SetLastUpdatePath(model);
 
-            if (Confirm($"Czy chcesz cofnąć aplikację do versji z katalogu {model.OldApplicationDirectory}?") == false)
+            if (Confirm($"Czy chcesz cofnąć aplikację do wersji z katalogu {model.OldApplicationDirectory}?") == false)
             {
                 return null;
             }
@@ -30,10 +30,10 @@ namespace ApplicationUpdater.Processes
 
             if (pathToOldApplication.Exists == false)
             {
-                throw new Exception($"w katalogu {pathToOldApplication} nie ma aplikacji do podmiany");
+                throw new Exception($"W katalogu {pathToOldApplication} nie ma aplikacji do podmiany");
             }
 
-            CopyAll(pathToOldApplication, model.IntepubDirectory, true, "Undo {0}");
+            CopyAll(pathToOldApplication, model.IntepubDirectory, true, "Kopiowanie pliku: {0}");
         }
 
         private void SetLastUpdatePath(UpdateModel model)
@@ -42,9 +42,7 @@ namespace ApplicationUpdater.Processes
 
             var rootDir = GetBackupPath(model, dateTime);
 
-            model.OldApplicationDirectory = new DirectoryInfo("X:/");
-
-            while (model.OldApplicationDirectory.Exists == false)
+            while (model.OldApplicationDirectory == null || model.OldApplicationDirectory.Exists == false)
             {
                 while (rootDir.Exists == false)
                 {
@@ -80,7 +78,7 @@ namespace ApplicationUpdater.Processes
                 return -1;
             }
 
-            string index = files.Last().Substring(files.Last().Length - 1);
+            string index = files.OrderBy(s=>int.Parse(s.Substring(s.LastIndexOf('\\')+1))).Last().Substring(files.Last().Length - 1);
 
             return int.Parse(index);
         }

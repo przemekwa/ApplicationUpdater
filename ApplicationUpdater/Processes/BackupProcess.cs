@@ -13,9 +13,7 @@ namespace ApplicationUpdater.Processes
         {
             var backupDirectory = Directory.CreateDirectory(Path.Combine(model.BackupDirectory.FullName, Consts.DirectoriesNames.OldApplication));
 
-            CopyAll(new DirectoryInfo(model.IntepubDirectory.FullName), backupDirectory, false, "Backup file: {0}" );
-
-            UpdateProcess($"Backup successful.");
+            CopyAll(new DirectoryInfo(model.IntepubDirectory.FullName), backupDirectory, false, "Tworzenie kopi zapasowej pliku: {0}" );
 
             return null;
         }

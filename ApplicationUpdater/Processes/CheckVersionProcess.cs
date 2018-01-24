@@ -34,24 +34,22 @@ namespace ApplicationUpdater.Processes
 
                 if (file == null)
                 {
-                    UpdateProcess($"UWAGA! Brak pliku w nowej aplikacji {inetpubFile.FullName}");
+                    UpdateProcess($"Brak pliku w nowej aplikacji {inetpubFile.FullName}");
                     error = true;
                     continue;
                 }
 
                 if (inetpubFile.CreationTime >= file.CreationTime)
                 {
-                    UpdateProcess($"UWAGA! W katalogu docelowym znaduje się nowszy plik {inetpubFile.FullName}");
+                    UpdateProcess($"W katalogu docelowym znaduje się nowszy plik {inetpubFile.FullName}");
                     error = true;
                 }
             }
 
-            if (error && Confirm("Wystąpiły błędy podczas sprawdzania wersji pliku czy chcesz kontutłować?") == false)
+            if (error && Confirm("Wystąpiły błędy podczas sprawdzania plików czy chcesz kontutłować?") == false)
             {
                 Environment.Exit(0);
             }
-
-            UpdateProcess("Proces sprawdzania wersji plików zakończony pomyślnie.");
 
             return null;
 

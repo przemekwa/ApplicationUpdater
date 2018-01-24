@@ -23,7 +23,7 @@ namespace ApplicationUpdater
                 Console.CursorVisible = false;
                 var updateModel = GetUpdateModel(args);
 
-                ConsoleEvent("Przygotowywanie modelu", null);
+                ConsoleEvent("Przygotowywanie modelu danych", null);
 
                 var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(logger);
 
@@ -62,7 +62,7 @@ namespace ApplicationUpdater
         {
             var pc = (ProcessConfirmation)sender;
 
-            Console.WriteLine(pc.Question);
+            Console.Write($"--> {pc.Question}");
 
             var allowKeys = new List<ConsoleKey>
             {
@@ -75,7 +75,7 @@ namespace ApplicationUpdater
 
             while (allowKeys.Contains(key) == false)
             {
-                key = Console.ReadKey().Key;
+                key = Console.ReadKey(true).Key;
             }
 
             if (key == ConsoleKey.C)
@@ -84,6 +84,8 @@ namespace ApplicationUpdater
             }
 
             pc.Key = key;
+
+            Console.WriteLine(pc.Key.ToString());
         }
 
         private static UpdateModel GetUpdateModel(string[] args)
