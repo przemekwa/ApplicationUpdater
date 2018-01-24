@@ -23,7 +23,7 @@ namespace ApplicationUpdater
 
         public void SetOnline(UpdateModel updateModel)
         {
-            var process = new SetOnlineProcess();
+            var process = new SetOnLineProcess();
 
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
@@ -33,7 +33,7 @@ namespace ApplicationUpdater
 
         public void SetOffline(UpdateModel updateModel)
         {
-            var process = new SetOfflineProcess();
+            var process = new SetOffLineProcess();
 
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;

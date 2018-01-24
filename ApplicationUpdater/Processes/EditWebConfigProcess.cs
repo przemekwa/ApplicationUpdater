@@ -16,7 +16,7 @@ namespace ApplicationUpdater.Processes
 
             if (webConfigPath.Exists == false)
             {
-                throw new Exception("Web.config nie istnieje");
+                throw new Exception("Web.config file does not exist");
             }
 
             var xmlDoc = XDocument.Load(webConfigPath.FullName);
@@ -29,14 +29,14 @@ namespace ApplicationUpdater.Processes
             
             if (appVersionElement == null)
             {
-                throw new Exception("Nie można zmianić numeru wersji");
+                throw new Exception("The version number can not be changed");
             }
 
             appVersionElement.SetAttributeValue("value", model.Version);
 
             xmlDoc.Save(webConfigPath.FullName);
 
-            UpdateProcess($"Ustawiono wersję w web.config na { model.Version}");
+            UpdateProcess($"The version { model.Version} has been set in web.config");
 
             return new ProcesEventResult
             {

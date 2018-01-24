@@ -21,7 +21,7 @@ namespace ApplicationUpdater.Processes
 
             if (!inetpubFiles.Any() || !newAppFiles.Any())
             {
-                throw new Exception("Brak plików aby poównać.");
+                throw new Exception("No files to compare.");
             }
 
             var error = false;
@@ -34,19 +34,19 @@ namespace ApplicationUpdater.Processes
 
                 if (file == null)
                 {
-                    UpdateProcess($"Brak pliku w nowej aplikacji {inetpubFile.FullName}");
+                    UpdateProcess($"No file in the new application {inetpubFile.FullName}");
                     error = true;
                     continue;
                 }
 
                 if (inetpubFile.CreationTime >= file.CreationTime)
                 {
-                    UpdateProcess($"W katalogu docelowym znaduje się nowszy plik {inetpubFile.FullName}");
+                    UpdateProcess($"A newer file is loaded in the destination directory {inetpubFile.FullName}");
                     error = true;
                 }
             }
 
-            if (error && Confirm("Wystąpiły błędy podczas sprawdzania plików czy chcesz kontutłować?") == false)
+            if (error && Confirm("Errors occurred while checking files. Do you want to continue?") == false)
             {
                 Environment.Exit(0);
             }

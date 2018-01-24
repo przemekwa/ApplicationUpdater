@@ -14,7 +14,7 @@ namespace ApplicationUpdater.Processes
         {
             SetLastUpdatePath(model);
 
-            if (Confirm($"Czy chcesz cofnąć aplikację do wersji z katalogu {model.OldApplicationDirectory}?") == false)
+            if (Confirm($"Do you want to undo the application to the version from the catalog { model.OldApplicationDirectory}?") == false)
             {
                 return null;
             }
@@ -30,10 +30,10 @@ namespace ApplicationUpdater.Processes
 
             if (pathToOldApplication.Exists == false)
             {
-                throw new Exception($"W katalogu {pathToOldApplication} nie ma aplikacji do podmiany");
+                throw new Exception($"There is no substitution application in the catalog {pathToOldApplication}");
             }
 
-            CopyAll(pathToOldApplication, model.IntepubDirectory, true, "Kopiowanie pliku: {0}");
+            CopyAll(pathToOldApplication, model.IntepubDirectory, true, "Copy file: {0}");
         }
 
         private void SetLastUpdatePath(UpdateModel model)

@@ -16,7 +16,7 @@ namespace ApplicationUpdater.Processes
 
             Directory.CreateDirectory(unZipDirectory);
 
-            UpdateProcess($"Wypakowywanie {model.PathToZipFile.FullName} do {unZipDirectory}");
+            UpdateProcess($"Unzip {model.PathToZipFile.FullName} to {unZipDirectory}");
 
             ZipFile.ExtractToDirectory(model.PathToZipFile.FullName, unZipDirectory);
 

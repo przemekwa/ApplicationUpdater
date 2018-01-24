@@ -74,8 +74,8 @@
     <Compile Include="Processes\EditWebConfigProcess.cs" />
     <Compile Include="Processes\ProcessBase.cs" />
     <Compile Include="Processes\ProcessConfirmation.cs" />
-    <Compile Include="Processes\SetOnlineProcess.cs" />
-    <Compile Include="Processes\SetOfflineProcess.cs" />
+    <Compile Include="Processes\SetOffLineProcess.cs" />
+    <Compile Include="Processes\SetOnLineProcess.cs" />
     <Compile Include="Processes\UndoProcess.cs" />
     <Compile Include="Processes\UnzipProcess.cs" />
     <Compile Include="Program.cs" />

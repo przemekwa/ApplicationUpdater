@@ -16,14 +16,14 @@ namespace ApplicationUpdater
         {
             var logger = LogManager.GetLogger("ApplicationUpdater");
 
-            ConsoleEvent("Aktualizacja aplikacji", null);
+            ConsoleEvent("Application update", null);
 
             try
             {
                 Console.CursorVisible = false;
                 var updateModel = GetUpdateModel(args);
 
-                ConsoleEvent("Przygotowywanie modelu danych", null);
+                ConsoleEvent("Preparing the data model", null);
 
                 var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(logger);
 
@@ -38,12 +38,12 @@ namespace ApplicationUpdater
             {
                 logger.Error(e);
 
-                Console.WriteLine($"Wystąpił błąd podczas aktualizacji: {e.Message}");
+                Console.WriteLine($"An error occurred during the update: {e.Message}");
             }
 
-            ConsoleEvent("Aplikacja została zaaktalizowana", null);
+            ConsoleEvent("The application has been updated", null);
 
-            Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować...");
+            Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
             Console.CursorVisible = true;
         }
@@ -62,7 +62,7 @@ namespace ApplicationUpdater
         {
             var pc = (ProcessConfirmation)sender;
 
-            Console.Write($"--> {pc.Question}");
+            Console.Write($"{ GetStopWatchString(DateTime.Now)}...{pc.Question}");
 
             var allowKeys = new List<ConsoleKey>
             {
@@ -85,14 +85,14 @@ namespace ApplicationUpdater
 
             pc.Key = key;
 
-            Console.WriteLine(pc.Key.ToString());
+            ConsoleEvent(pc.Key.ToString(), null);
         }
 
         private static UpdateModel GetUpdateModel(string[] args)
         {
             if (args.Length != 5)
             {
-                throw new ArgumentException("Brak odpowiednich parametrów");
+                throw new ArgumentException("No suitable parameters");
             }
 
             var updateModel = new UpdateModel
