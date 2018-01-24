@@ -20,6 +20,27 @@ namespace ApplicationUpdater
         public event EventHandler UpdateEvent; 
         public event EventHandler ConfirmEvent;
 
+
+        public void SetOnline(UpdateModel updateModel)
+        {
+            var process = new SetOnlineProcess();
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            process.Process(updateModel);
+        }
+
+        public void SetOffline(UpdateModel updateModel)
+        {
+            var process = new SetOfflineProcess();
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            process.Process(updateModel);
+        }
+
         public void CheckVersion(UpdateModel updateModel)
         {
             var checkVersionEvent = new CheckVersionProcess();
@@ -124,12 +145,14 @@ namespace ApplicationUpdater
             ExecuteProcess(new List<Action<UpdateModel>>
             {
                 PrepareEnviroment,
+                SetOffline,
                 Unzip,
                 CheckVersion,
                 MakeBackup,
                 CopyFiles,
                 VerifyCopy,
-                EditWebConfig
+                EditWebConfig,
+                SetOnline
             }, updateModel);
         }
 
@@ -137,12 +160,7 @@ namespace ApplicationUpdater
         {
             foreach (var action in actions)
             {
-                UpdateEvent("------------------", new EventArgs { });
-                UpdateEvent($"--> START {action.Method.Name} ", new EventArgs { });
-                UpdateEvent($"", new EventArgs { });
                 action.Invoke(updateModel);
-                UpdateEvent($"", new EventArgs { });
-                UpdateEvent($"--> STOP {action.Method.Name} ", new EventArgs { });
             }
         }
     }

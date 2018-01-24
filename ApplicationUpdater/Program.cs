@@ -20,7 +20,7 @@ namespace ApplicationUpdater
 
             try
             {
-
+                Console.CursorVisible = false;
                 var updateModel = GetUpdateModel(args);
 
                 ConsoleEvent("Przygotowywanie modelu", null);
@@ -45,6 +45,7 @@ namespace ApplicationUpdater
 
             Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować...");
             Console.ReadKey();
+            Console.CursorVisible = true;
         }
 
         public static string GetStopWatchString(DateTime ts)
