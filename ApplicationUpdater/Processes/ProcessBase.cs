@@ -32,9 +32,15 @@ namespace ApplicationUpdater.Processes
             return processConfirmation.Key == ConsoleKey.Y;
         }
 
-        protected virtual void UpdateProcess(string msg)
+        protected virtual void UpdateProcess(string msg, bool isNewLine = true)
         {
-            ProcessEvent(msg, new EventArgs { });
+            var p = new ConsoleWriteProcess
+            {
+                Msg = msg,
+                NewLine = isNewLine
+            };
+
+            ProcessEvent(p, new EventArgs { });
         }
 
         protected virtual void CopyAll(DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat)

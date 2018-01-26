@@ -26,7 +26,7 @@ namespace ApplicationUpdater.Processes
             File.Copy(file.FullName, Path.Combine(file.DirectoryName, $"_{offLineFileName}"));
             File.Delete(file.FullName);
 
-            return null;
+            return ProcesEventResult.OK;
         }
     }
 }

@@ -16,21 +16,24 @@ namespace ApplicationUpdater
         {
             var logger = LogManager.GetLogger("ApplicationUpdater");
 
-            ConsoleEvent("Application update", null);
+            Console.WriteLine("Application update", null);
 
             try
             {
                 Console.CursorVisible = false;
                 var updateModel = GetUpdateModel(args);
 
-                ConsoleEvent("Preparing the data model", null);
+                ConsoleEvent(new ConsoleWriteProcess { Msg = "Preparing the data model" }, null);
 
                 var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(logger);
 
                 selgrosApplicationUpdateStrategy.UpdateEvent += ConsoleEvent;
                 selgrosApplicationUpdateStrategy.ConfirmEvent += GetConfirmation;
+                selgrosApplicationUpdateStrategy.ResultEvetnt += RezultEvent;
 
                 var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy, logger);
+
+                RezultEvent(ProcesEventResult.OK, null);
 
                 iISAplicationUpdater.Update(updateModel);
             }
@@ -41,7 +44,7 @@ namespace ApplicationUpdater
                 Console.WriteLine($"An error occurred during the update: {e.Message}");
             }
 
-            ConsoleEvent("The application has been updated", null);
+            Console.WriteLine("The application has been updated", null);
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
@@ -53,16 +56,30 @@ namespace ApplicationUpdater
             return $"{ts.Hour:00}:{ts.Minute:00}:{ts.Second:00}:{(ts.Millisecond / 10):00}";
         }
 
+        private static void RezultEvent(object sender, EventArgs e)
+        {
+            Console.WriteLine($"....{((ProcesEventResult)sender).Result}");
+        }
+
         private static void ConsoleEvent(object sender, EventArgs e)
         {
-            Console.WriteLine($"{GetStopWatchString(DateTime.Now)}...{(string)sender}.");
+            var d = sender as ConsoleWriteProcess;
+
+            if (d.NewLine)
+            {
+                Console.WriteLine($"{GetStopWatchString(DateTime.Now)}   {d.Msg}.");
+            }
+            else
+            {
+                Console.Write($"{GetStopWatchString(DateTime.Now)}   {d.Msg}.");
+            }
         }
 
         private static void GetConfirmation(object sender, EventArgs e)
         {
             var pc = (ProcessConfirmation)sender;
 
-            Console.Write($"{ GetStopWatchString(DateTime.Now)}...{pc.Question}");
+            Console.Write($"{ GetStopWatchString(DateTime.Now)}   {pc.Question}");
 
             var allowKeys = new List<ConsoleKey>
             {
@@ -85,7 +102,7 @@ namespace ApplicationUpdater
 
             pc.Key = key;
 
-            ConsoleEvent(pc.Key.ToString(), null);
+            ConsoleEvent( new ConsoleWriteProcess { Msg = pc.Key.ToString() }, null);
         }
 
         private static UpdateModel GetUpdateModel(string[] args)

@@ -26,7 +26,7 @@ namespace ApplicationUpdater.Processes
 
             return new ProcesEventResult
             {
-                Result = true
+                Result = "OK"
             };
         }
     }

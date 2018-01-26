@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Consts.cs" />
     <Compile Include="IISAplicationUpdater.cs" />
+    <Compile Include="Processes\ConsoleWriteProcess.cs" />
     <Compile Include="Processes\IUpdateProcess.cs" />
     <Compile Include="Processes\BackupProcess.cs" />
     <Compile Include="Processes\CheckVersionProcess.cs" />

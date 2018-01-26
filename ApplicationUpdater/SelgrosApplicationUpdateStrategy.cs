@@ -19,7 +19,7 @@ namespace ApplicationUpdater
 
         public event EventHandler UpdateEvent; 
         public event EventHandler ConfirmEvent;
-
+        public event EventHandler ResultEvetnt;
 
         public void SetOnline(UpdateModel updateModel)
         {
@@ -28,7 +28,7 @@ namespace ApplicationUpdater
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
 
-            process.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void SetOffline(UpdateModel updateModel)
@@ -38,7 +38,7 @@ namespace ApplicationUpdater
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
 
-            process.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void CheckVersion(UpdateModel updateModel)

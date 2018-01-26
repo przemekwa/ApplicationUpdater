@@ -15,7 +15,8 @@ namespace ApplicationUpdater.Processes
 
             CopyAll(new DirectoryInfo(model.IntepubDirectory.FullName), backupDirectory, false, "Backing up: {0}" );
 
-            return null;
+
+            return ProcesEventResult.OK;
         }
     }
 }

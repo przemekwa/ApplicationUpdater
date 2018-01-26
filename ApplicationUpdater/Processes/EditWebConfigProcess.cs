@@ -29,7 +29,7 @@ namespace ApplicationUpdater.Processes
             
             if (appVersionElement == null)
             {
-                throw new Exception("The version number can not be changed");
+                return ProcesEventResult.ERROR;
             }
 
             appVersionElement.SetAttributeValue("value", model.Version);
@@ -40,7 +40,7 @@ namespace ApplicationUpdater.Processes
 
             return new ProcesEventResult
             {
-                Result = true
+                Result = "OK"
             };
         }
     }
