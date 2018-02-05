@@ -78,7 +78,7 @@ namespace ApplicationUpdater
         private static void GetConfirmation(object sender, EventArgs e)
         {
             var pc = (ProcessConfirmation)sender;
-
+            Console.WriteLine();
             Console.Write($"{ GetStopWatchString(DateTime.Now)}   {pc.Question}");
 
             var allowKeys = new List<ConsoleKey>
