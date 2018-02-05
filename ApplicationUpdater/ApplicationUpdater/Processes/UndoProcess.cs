@@ -14,9 +14,6 @@ namespace ApplicationUpdater.Processes
         {
         }
 
-  
-
-
         public ProcesEventResult Process(UpdateModel model)
         {
             SetLastUpdatePath(model);

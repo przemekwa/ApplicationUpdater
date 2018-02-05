@@ -9,7 +9,7 @@ namespace ApplicationUpdater.Processes
 {
     public class CheckVersionProcess: ProcessBase, IProcess<UpdateModel>
     {
-        public CheckVersionProcess() : base("Checking files")
+        public CheckVersionProcess() : base("Checking the files")
         {
         }
 

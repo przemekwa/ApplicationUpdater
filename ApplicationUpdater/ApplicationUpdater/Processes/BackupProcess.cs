@@ -9,7 +9,7 @@ namespace ApplicationUpdater.Processes
 {
     public class BackupProcess : ProcessBase, IProcess<UpdateModel>
     {
-        public BackupProcess() : base("Backup application Files")
+        public BackupProcess() : base("Backup application files")
         {
         }
 

@@ -103,8 +103,6 @@ namespace ApplicationUpdater
             pc.Key = key;
 
             Console.WriteLine(pc.Key.ToString());
-
-            Console.WriteLine();
         }
 
         private static UpdateModel GetUpdateModel(string[] args)

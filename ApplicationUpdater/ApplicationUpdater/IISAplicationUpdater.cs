@@ -20,8 +20,8 @@ namespace ApplicationUpdater
         {
             foreach (var action in actions)
             {
-               
                 action.Invoke(updateModel);
+                Console.WriteLine();
             }
         }
 
