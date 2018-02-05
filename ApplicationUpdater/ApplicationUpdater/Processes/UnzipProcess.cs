@@ -10,7 +10,7 @@ namespace ApplicationUpdater.Processes
 {
     public class UnzipProcess: ProcessBase, IProcess<UpdateModel>
     {
-        public UnzipProcess() : base("Un zipping")
+        public UnzipProcess() : base("Unzipping")
         {
         }
 

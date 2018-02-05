@@ -15,7 +15,6 @@ namespace ApplicationUpdater
         {
             Consts.Header.WriteHeader();
 
-
             var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -24,7 +23,6 @@ namespace ApplicationUpdater
 
             try
             {
-
                 Console.CursorVisible = false;
 
                 var updateModel = GetUpdateModel(args);

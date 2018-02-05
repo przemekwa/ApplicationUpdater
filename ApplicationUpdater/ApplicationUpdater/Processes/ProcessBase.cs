@@ -57,14 +57,14 @@ namespace ApplicationUpdater.Processes
 
             foreach (FileInfo fi in source.GetFiles())
             {
-                UpdateProcess(string.Format(msgFormat, fi.Name));
-
                 if (excludePath != null && excludePath.Any(s => fi.FullName.Contains(s)))
                 {
                     continue;
                 }
 
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
+
+                UpdateProcess(string.Format(msgFormat, fi.Name));
             }
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
