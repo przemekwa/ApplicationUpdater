@@ -34,7 +34,7 @@ namespace ApplicationUpdater.Processes
             
             if (appVersionElement == null)
             {
-                return ProcesEventResult.ERROR;
+                return GetProcesEventResult(Consts.ProcesEventResult.Error);
             }
 
             appVersionElement.SetAttributeValue("value", model.UserParams.Version);
@@ -43,10 +43,7 @@ namespace ApplicationUpdater.Processes
 
             UpdateProcess($"The version { model.UserParams.Version} has been set in web.config");
 
-            return new ProcesEventResult
-            {
-                Result = "OK"
-            };
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
     }
 }

@@ -28,10 +28,7 @@ namespace ApplicationUpdater.Processes
 
             model.NewApplicationDirectory = new DirectoryInfo(Path.Combine(model.UnZipDirectory.FullName, "app"));
 
-            return new ProcesEventResult
-            {
-                Result = "OK"
-            };
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
     }
 }

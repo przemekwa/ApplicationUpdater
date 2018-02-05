@@ -61,7 +61,7 @@ namespace ApplicationUpdater.Processes
                 Environment.Exit(0);
             }
 
-            return null;
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
 
         }
     }

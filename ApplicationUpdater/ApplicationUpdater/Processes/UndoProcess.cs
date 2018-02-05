@@ -20,12 +20,12 @@ namespace ApplicationUpdater.Processes
 
             if (Confirm($"Do you want to undo the application to the version from the catalog { model.OldApplicationDirectory}?") == false)
             {
-                return null;
+                return GetProcesEventResult(Consts.ProcesEventResult.Skip);
             }
 
             CopyFromOldApplication(model);
 
-            return null;
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
 
         private void CopyFromOldApplication(UpdateModel model)

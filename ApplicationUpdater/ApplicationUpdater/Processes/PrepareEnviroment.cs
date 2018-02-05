@@ -31,7 +31,7 @@ namespace ApplicationUpdater.Processes
 
             model.UserParams.BackupDirectory = new DirectoryInfo(backupDirectoryPath);
 
-            return null;
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
 
         private string GetBackupPath(UpdateModel updateModel, int index)

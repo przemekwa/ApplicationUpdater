@@ -32,7 +32,7 @@ namespace ApplicationUpdater
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
 
-            process.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void SetOffline(UpdateModel updateModel)
@@ -47,22 +47,22 @@ namespace ApplicationUpdater
 
         public void CheckVersion(UpdateModel updateModel)
         {
-            var checkVersionEvent = new CheckVersionProcess(ConfigurationRoot);
+            var process = new CheckVersionProcess(ConfigurationRoot);
 
-            checkVersionEvent.ProcessEvent += ProcessEvent;
-            checkVersionEvent.ConfirmEvent += ConfirmEvent;
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
 
-            checkVersionEvent.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void CopyFiles(UpdateModel updateModel)
         {
-            var copyfilesProcess = new CopyFilesProcess();
+            var process = new CopyFilesProcess();
 
-            copyfilesProcess.ProcessEvent += ProcessEvent;
-            copyfilesProcess.ConfirmEvent += ConfirmEvent;
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
 
-            copyfilesProcess.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void CreateReport(UpdateModel updateModel)
@@ -72,22 +72,22 @@ namespace ApplicationUpdater
 
         public void MakeBackup(UpdateModel updateModel)
         {
-            var backupProcess = new BackupProcess(ConfigurationRoot);
+            var process = new BackupProcess(ConfigurationRoot);
 
-            backupProcess.ProcessEvent += ProcessEvent;
-            backupProcess.ConfirmEvent += ConfirmEvent;
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
 
-            backupProcess.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void Unzip(UpdateModel updateModel)
         {
-            var unZipEvent = new UnzipProcess();
+            var process = new UnzipProcess();
 
-            unZipEvent.ProcessEvent += ProcessEvent;
-            unZipEvent.ConfirmEvent += ConfirmEvent;
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
 
-            var result = unZipEvent.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         private void ProcessEvent(object sender, EventArgs e)
@@ -102,34 +102,34 @@ namespace ApplicationUpdater
 
         public void EditWebConfig(UpdateModel updateModel)
         {
-            var editWebConfig = new EditWebConfigProcess();
+            var process = new EditWebConfigProcess();
 
-            editWebConfig.ProcessEvent += ProcessEvent;
-            editWebConfig.ConfirmEvent += ConfirmEvent;
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
 
-            editWebConfig.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
 
         }
 
         public void PrepareEnviroment(UpdateModel updateModel)
         {
-            var prepare = new PrepareEnviroment();
+            var process = new PrepareEnviroment();
 
-            prepare.ProcessEvent += ProcessEvent;
-            prepare.ConfirmEvent += ConfirmEvent;
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
 
-            prepare.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
 
         }
 
         public void UndoProcess(UpdateModel updateModel)
         {
-            var undoProcess = new UndoProcess();
+            var process = new UndoProcess();
 
-            undoProcess.ProcessEvent += ProcessEvent;
-            undoProcess.ConfirmEvent += ConfirmEvent;
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
 
-            undoProcess.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
 
         }
 

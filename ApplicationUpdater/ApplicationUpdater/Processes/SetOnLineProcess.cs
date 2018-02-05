@@ -22,7 +22,7 @@ namespace ApplicationUpdater.Processes
 
             if (Confirm("Do you want to go ONLINE mode?") == false)
             {
-                return null;
+                return GetProcesEventResult(Consts.ProcesEventResult.Skip);
             }
 
             var file = model.UserParams.IntepubDirectory
@@ -32,7 +32,7 @@ namespace ApplicationUpdater.Processes
             File.Copy(file.FullName, Path.Combine(file.DirectoryName, $"_{offLineFileName}"));
             File.Delete(file.FullName);
 
-            return ProcesEventResult.OK;
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
     }
 }

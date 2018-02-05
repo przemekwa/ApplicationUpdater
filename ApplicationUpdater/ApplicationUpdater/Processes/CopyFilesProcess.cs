@@ -17,12 +17,12 @@ namespace ApplicationUpdater.Processes
         {
             if (Confirm("Do you want to update application?") == false)
             {
-                return ProcesEventResult.STOP;
+                return GetProcesEventResult(Consts.ProcesEventResult.Skip);
             }
 
             CopyAll(model.NewApplicationDirectory.FullName, model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
 
-            return null;
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
     }
 }

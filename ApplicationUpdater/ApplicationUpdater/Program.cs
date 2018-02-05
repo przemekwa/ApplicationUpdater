@@ -26,6 +26,7 @@ namespace ApplicationUpdater
                 var updateModel = GetUpdateModel(args);
 
                 Console.WriteLine(updateModel.UserParams.ToString());
+                Console.WriteLine();
 
                 var selgrosApplicationUpdateStrategy = di.GetService<SelgrosApplicationUpdateStrategy>();
 
@@ -79,7 +80,7 @@ namespace ApplicationUpdater
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             var pc = (ProcessConfirmation)sender;
-            Console.WriteLine();
+
             Console.Write($"{ GetStopWatchString(DateTime.Now)}   {pc.Question}");
 
             var allowKeys = new List<ConsoleKey>
