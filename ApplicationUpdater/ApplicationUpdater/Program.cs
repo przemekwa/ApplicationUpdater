@@ -1,7 +1,9 @@
 ﻿using ApplicationUpdater.Processes;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -13,23 +15,29 @@ namespace ApplicationUpdater
         {
             Consts.Header.WriteHeader();
 
+
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+
             try
             {
+
                 Console.CursorVisible = false;
 
                 var updateModel = GetUpdateModel(args);
 
                 Console.WriteLine(updateModel.UserParams.ToString());
 
-                var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy();
+                var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(configuration);
 
                 selgrosApplicationUpdateStrategy.UpdateEvent += ConsoleEvent;
                 selgrosApplicationUpdateStrategy.ConfirmEvent += GetConfirmation;
                 selgrosApplicationUpdateStrategy.ResultEvetnt += RezultEvent;
 
                 var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy);
-
-              
 
                 iISAplicationUpdater.Update(updateModel);
             }

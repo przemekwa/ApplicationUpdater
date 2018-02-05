@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,13 +10,25 @@ namespace ApplicationUpdater.Processes
 {
     public class CheckVersionProcess: ProcessBase, IProcess<UpdateModel>
     {
-        public CheckVersionProcess() : base("Checking the files")
+        public IEnumerable<string> ExcludeDir { get; set; }
+
+        public IConfigurationRoot ConfigurationRoot { get; set; }
+
+        public CheckVersionProcess(IConfigurationRoot configurationRoot) : base("Checking the files")
         {
+            this.ConfigurationRoot = configurationRoot;
         }
 
         public ProcesEventResult Process(UpdateModel model)
         {
+            ExcludeDir = ConfigurationRoot
+                   .GetSection("CheckVersionProcess.ExcludeDirectories")
+                   .GetChildren()
+                   .Select(x => Path.Combine(model.UserParams.IntepubDirectory.FullName, x.Value))
+                   .ToList();
+
             var inetpubFiles = Directory.GetFiles(model.UserParams.IntepubDirectory.FullName, "*.*", SearchOption.AllDirectories)
+                .Where(s=> ExcludeDir.Any(d=> s.Contains(d)) == false)
                 .Select(f => new FileInfo(f));
 
             var newAppDirectory = model.UnZipDirectory.FullName;
@@ -38,7 +51,7 @@ namespace ApplicationUpdater.Processes
 
                 if (file == null)
                 {
-                    UpdateProcess($"No file in the new application {inetpubFile.Name}");
+                    UpdateProcess($"No file in the new application {inetpubFile.FullName.Replace(model.UserParams.IntepubDirectory.FullName,string.Empty)}");
                     error = true;
                     continue;
                 }

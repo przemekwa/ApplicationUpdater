@@ -1,4 +1,5 @@
 ﻿using ApplicationUpdater.Processes;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,16 @@ namespace ApplicationUpdater
         public event EventHandler ConfirmEvent;
         public event EventHandler ResultEvetnt;
 
+        public IConfigurationRoot ConfigurationRoot { get; set; }
+
+        public SelgrosApplicationUpdateStrategy(IConfigurationRoot configurationRoot)
+        {
+            ConfigurationRoot = configurationRoot;
+        }
+
         public void SetOnline(UpdateModel updateModel)
         {
-            var process = new SetOnLineProcess();
+            var process = new SetOnLineProcess( );
 
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
@@ -35,7 +43,7 @@ namespace ApplicationUpdater
 
         public void CheckVersion(UpdateModel updateModel)
         {
-            var checkVersionEvent = new CheckVersionProcess();
+            var checkVersionEvent = new CheckVersionProcess(ConfigurationRoot);
 
             checkVersionEvent.ProcessEvent += ProcessEvent;
             checkVersionEvent.ConfirmEvent += ConfirmEvent;
@@ -146,7 +154,5 @@ namespace ApplicationUpdater
                 SetOnline
             };
         }
-
-       
     }
 }
