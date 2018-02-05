@@ -14,6 +14,10 @@ namespace ApplicationUpdater
         public event EventHandler ConfirmEvent;
         public event EventHandler ResultEvetnt;
 
+
+        public IProcess<UpdateModel> SetOnLineProcess { get; set; }
+
+
         public IConfigurationRoot ConfigurationRoot { get; set; }
 
         public SelgrosApplicationUpdateStrategy(IConfigurationRoot configurationRoot)

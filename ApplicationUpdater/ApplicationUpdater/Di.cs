@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ApplicationUpdater.Processes;
+using Microsoft.Extensions.Configuration;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -26,21 +27,17 @@ namespace ApplicationUpdater
         public void Build()
         {
             var builder = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                               .SetBasePath(Directory.GetCurrentDirectory())
+                               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             Kernel.Bind<IISAplicationUpdater>().ToSelf();
             Kernel.Bind<IConfigurationRoot>().ToMethod(c => builder.Build());
 
-            Kernel.Bind<IUpdateProcess>().ToMethod(c =>
+            Kernel.Bind<IUpdateProcess>().To<SelgrosApplicationUpdateStrategy>().OnActivation(s =>
             {
-                var result = new SelgrosApplicationUpdateStrategy(builder.Build());
-
-                result.UpdateEvent += UpdateEvent;
-                result.ConfirmEvent += ConfirmEvent;
-                result.ResultEvetnt += ResultEvetnt;
-
-                return result;
+                s.ConfirmEvent += ConfirmEvent;
+                s.ResultEvetnt += ResultEvetnt;
+                s.UpdateEvent += UpdateEvent;
             });
         }
 

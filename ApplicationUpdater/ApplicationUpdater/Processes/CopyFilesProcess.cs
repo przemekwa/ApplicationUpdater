@@ -13,8 +13,6 @@ namespace ApplicationUpdater.Processes
         {
         }
 
-       
-
         public ProcesEventResult Process(UpdateModel model)
         {
             if (Confirm("Do you want to update application?") == false)

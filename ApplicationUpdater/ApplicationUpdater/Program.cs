@@ -15,6 +15,7 @@ namespace ApplicationUpdater
         static void Main(string[] args)
         {
             Consts.Header.WriteHeader();
+            Console.CursorVisible = false;
 
             var di = new Di(null, ConsoleEvent, GetConfirmation, RezultEvent);
 
@@ -22,8 +23,6 @@ namespace ApplicationUpdater
 
             try
             {
-                Console.CursorVisible = false;
-
                 var updateModel = GetUpdateModel(args);
 
                 Console.WriteLine(updateModel.UserParams.ToString());
@@ -78,6 +77,7 @@ namespace ApplicationUpdater
 
         private static void GetConfirmation(object sender, EventArgs e)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             var pc = (ProcessConfirmation)sender;
             Console.WriteLine();
             Console.Write($"{ GetStopWatchString(DateTime.Now)}   {pc.Question}");
@@ -104,6 +104,8 @@ namespace ApplicationUpdater
             pc.Key = key;
 
             Console.WriteLine(pc.Key.ToString());
+
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private static UpdateModel GetUpdateModel(string[] args)
@@ -124,6 +126,8 @@ namespace ApplicationUpdater
                     IsUndoProcess = bool.Parse(GetParam(args, 4, "IsUndoProcess"))
                 }
             };
+
+          
 
             return updateModel;
         }
