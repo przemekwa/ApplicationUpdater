@@ -17,6 +17,15 @@ namespace ApplicationUpdater.Processes
 
         public string Name { get; set; }
 
+
+        public ProcesEventResult GetProcesEventResult(string msg)
+        {
+            return new ProcesEventResult
+            {
+                Result = $"[{this.Name}] {msg}"
+            };
+        }
+
         protected ProcessBase(IConfigurationRoot configurationRoot, string name)
         {
             ConfigurationRoot = configurationRoot;

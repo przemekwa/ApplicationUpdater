@@ -26,7 +26,7 @@ namespace ApplicationUpdater.Processes
                 this.GetExcludeFiles(model.UserParams.IntepubDirectory.FullName));
 
 
-            return ProcesEventResult.OK;
+            return GetProcesEventResult("Successful");
         }
     }
 }

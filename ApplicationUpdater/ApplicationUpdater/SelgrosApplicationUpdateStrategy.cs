@@ -42,7 +42,7 @@ namespace ApplicationUpdater
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
 
-            process.Process(updateModel);
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void CheckVersion(UpdateModel updateModel)

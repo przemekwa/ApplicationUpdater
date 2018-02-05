@@ -22,7 +22,7 @@ namespace ApplicationUpdater.Processes
 
             if (Confirm("Do you want to go OFFLINE mode?") == false)
             {
-                return ProcesEventResult.STOP;
+                return GetProcesEventResult("SKIP");
             }
 
             var file = model.UserParams.IntepubDirectory
@@ -41,7 +41,7 @@ namespace ApplicationUpdater.Processes
                 }
                 UpdateDateTimeInFile(file2);
 
-                return ProcesEventResult.OK;
+                return GetProcesEventResult("Successful");
             }
 
             UpdateDateTimeInFile(file);
@@ -49,7 +49,7 @@ namespace ApplicationUpdater.Processes
 
             UpdateProcess($"Switched application into OFFLINE mode");
 
-            return ProcesEventResult.OK;
+            return GetProcesEventResult("Successful");
 
         }
 

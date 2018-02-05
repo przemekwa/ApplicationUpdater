@@ -54,8 +54,8 @@ namespace ApplicationUpdater
         {
             var cwp = new ConsoleWriteProcess
             {
-                Msg = $"....{((ProcesEventResult)sender).Result}",
-                NewLine = false
+                Msg = $"{((ProcesEventResult)sender).Result}",
+                NewLine = true
             };
 
             ConsoleEvent(cwp, null);
