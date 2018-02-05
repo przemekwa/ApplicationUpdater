@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace ApplicationUpdater
 {
@@ -9,7 +11,7 @@ namespace ApplicationUpdater
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Application update", null);
+            Consts.Header.WriteHeader();
 
             try
             {
