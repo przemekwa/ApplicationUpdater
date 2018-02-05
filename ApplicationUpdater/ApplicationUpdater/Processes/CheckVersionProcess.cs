@@ -12,20 +12,13 @@ namespace ApplicationUpdater.Processes
     {
         public IEnumerable<string> ExcludeDir { get; set; }
 
-        public IConfigurationRoot ConfigurationRoot { get; set; }
-
-        public CheckVersionProcess(IConfigurationRoot configurationRoot) : base("Checking the files")
+        public CheckVersionProcess(IConfigurationRoot configurationRoot) : base(configurationRoot, "Checking the files")
         {
-            this.ConfigurationRoot = configurationRoot;
         }
 
         public ProcesEventResult Process(UpdateModel model)
         {
-            ExcludeDir = ConfigurationRoot
-                   .GetSection("CheckVersionProcess.ExcludeDirectories")
-                   .GetChildren()
-                   .Select(x => Path.Combine(model.UserParams.IntepubDirectory.FullName, x.Value))
-                   .ToList();
+            ExcludeDir = GetExcludeFiles(model.UserParams.IntepubDirectory.FullName);
 
             var inetpubFiles = Directory.GetFiles(model.UserParams.IntepubDirectory.FullName, "*.*", SearchOption.AllDirectories)
                 .Where(s=> ExcludeDir.Any(d=> s.Contains(d)) == false)

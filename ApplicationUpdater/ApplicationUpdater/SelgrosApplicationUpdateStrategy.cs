@@ -68,7 +68,7 @@ namespace ApplicationUpdater
 
         public void MakeBackup(UpdateModel updateModel)
         {
-            var backupProcess = new BackupProcess();
+            var backupProcess = new BackupProcess(ConfigurationRoot);
 
             backupProcess.ProcessEvent += ProcessEvent;
             backupProcess.ConfirmEvent += ConfirmEvent;

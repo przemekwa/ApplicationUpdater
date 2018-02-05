@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ApplicationUpdater.Processes
 {
     public class BackupProcess : ProcessBase, IProcess<UpdateModel>
     {
-        public BackupProcess() : base("Backup application files")
+        public BackupProcess(IConfigurationRoot configurationRoot) : base(configurationRoot, "Backup application files")
         {
         }
 
@@ -17,7 +18,12 @@ namespace ApplicationUpdater.Processes
         {
             var backupDirectory = Directory.CreateDirectory(Path.Combine(model.UserParams.BackupDirectory.FullName, Consts.DirectoriesNames.OldApplication));
 
-            CopyAll(new DirectoryInfo(model.UserParams.IntepubDirectory.FullName), backupDirectory, false, "Backing up: {0}" );
+            CopyAll(
+                new DirectoryInfo(model.UserParams.IntepubDirectory.FullName), 
+                backupDirectory, 
+                false, 
+                "Backing up: {0}",
+                this.GetExcludeFiles(model.UserParams.IntepubDirectory.FullName));
 
 
             return ProcesEventResult.OK;

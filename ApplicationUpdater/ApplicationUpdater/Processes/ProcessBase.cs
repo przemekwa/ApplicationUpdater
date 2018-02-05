@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,8 +13,15 @@ namespace ApplicationUpdater.Processes
     {
         public event EventHandler ProcessEvent;
         public event EventHandler ConfirmEvent;
+        public IConfigurationRoot ConfigurationRoot { get; set; }
 
         public string Name { get; set; }
+
+        protected ProcessBase(IConfigurationRoot configurationRoot, string name)
+        {
+            ConfigurationRoot = configurationRoot;
+            Name = name;
+        }
 
         public ProcessBase(string name)
         {
@@ -43,7 +51,7 @@ namespace ApplicationUpdater.Processes
             ProcessEvent(p, new EventArgs { });
         }
 
-        protected virtual void CopyAll(DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat)
+        protected virtual void CopyAll(DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat, IEnumerable<string> excludePath = null)
         {
             Directory.CreateDirectory(target.FullName);
 
@@ -51,14 +59,28 @@ namespace ApplicationUpdater.Processes
             {
                 UpdateProcess(string.Format(msgFormat, fi.Name));
 
+                if (excludePath != null && excludePath.Any(s => fi.FullName.Contains(s)))
+                {
+                    continue;
+                }
+
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
             }
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
             {
                 var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat);
+                CopyAll(diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
             }
+        }
+
+        public IEnumerable<string> GetExcludeFiles(string intepubDirectoryPath)
+        {
+            return ConfigurationRoot
+                  .GetSection("CheckVersionProcess.ExcludeDirectories")
+                  .GetChildren()
+                  .Select(x => Path.Combine(intepubDirectoryPath, x.Value))
+                  .ToList();
         }
     }
 }
