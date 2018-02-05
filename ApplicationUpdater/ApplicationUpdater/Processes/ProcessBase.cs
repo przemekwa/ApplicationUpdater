@@ -51,7 +51,7 @@ namespace ApplicationUpdater.Processes
             ProcessEvent(p, new EventArgs { });
         }
 
-        protected virtual void CopyAll(DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat, IEnumerable<string> excludePath = null)
+        protected virtual void CopyAll(string rootsourcePath, DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat, IEnumerable<string> excludePath = null)
         {
             Directory.CreateDirectory(target.FullName);
 
@@ -64,13 +64,13 @@ namespace ApplicationUpdater.Processes
 
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
 
-                UpdateProcess(string.Format(msgFormat, fi.Name));
+                UpdateProcess(string.Format(msgFormat,   fi.FullName.Replace(rootsourcePath, string.Empty)));
             }
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
             {
                 var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
+                CopyAll(rootsourcePath, diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
             }
         }
 

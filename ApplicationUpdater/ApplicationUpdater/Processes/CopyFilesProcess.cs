@@ -20,7 +20,7 @@ namespace ApplicationUpdater.Processes
                 return ProcesEventResult.STOP;
             }
 
-            CopyAll(model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
+            CopyAll(model.NewApplicationDirectory.FullName, model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
 
             return null;
         }

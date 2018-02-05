@@ -18,7 +18,7 @@ namespace ApplicationUpdater.Processes
         {
             var backupDirectory = Directory.CreateDirectory(Path.Combine(model.UserParams.BackupDirectory.FullName, Consts.DirectoriesNames.OldApplication));
 
-            CopyAll(
+            CopyAll(model.UserParams.IntepubDirectory.FullName,
                 new DirectoryInfo(model.UserParams.IntepubDirectory.FullName), 
                 backupDirectory, 
                 false, 
