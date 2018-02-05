@@ -52,7 +52,13 @@ namespace ApplicationUpdater
 
         private static void RezultEvent(object sender, EventArgs e)
         {
-            Console.WriteLine($"....{((ProcesEventResult)sender).Result}");
+            var cwp = new ConsoleWriteProcess
+            {
+                Msg = $"....{((ProcesEventResult)sender).Result}",
+                NewLine = false
+            };
+
+            ConsoleEvent(cwp, null);
         }
 
         private static void ConsoleEvent(object sender, EventArgs e)
@@ -61,11 +67,11 @@ namespace ApplicationUpdater
 
             if (d.NewLine)
             {
-                Console.WriteLine($"{GetStopWatchString(DateTime.Now)}   {d.Msg}.");
+                Console.WriteLine($"{GetStopWatchString(DateTime.Now)}   {d.Msg}");
             }
             else
             {
-                Console.Write($"{GetStopWatchString(DateTime.Now)}   {d.Msg}.");
+                Console.Write($"{GetStopWatchString(DateTime.Now)}   {d.Msg}");
             }
         }
 
@@ -96,7 +102,9 @@ namespace ApplicationUpdater
 
             pc.Key = key;
 
-            ConsoleEvent(new ConsoleWriteProcess { Msg = pc.Key.ToString() }, null);
+            Console.WriteLine(pc.Key.ToString());
+
+            Console.WriteLine();
         }
 
         private static UpdateModel GetUpdateModel(string[] args)

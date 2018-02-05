@@ -34,7 +34,7 @@ namespace ApplicationUpdater.Processes
 
                 if (file == null)
                 {
-                    UpdateProcess($"No file in the new application {inetpubFile.FullName}");
+                    UpdateProcess($"No file in the new application {inetpubFile.Name}");
                     error = true;
                     continue;
                 }

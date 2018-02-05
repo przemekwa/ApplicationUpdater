@@ -22,7 +22,7 @@ namespace ApplicationUpdater
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
 
-            ResultEvetnt(process.Process(updateModel), null);
+            process.Process(updateModel);
         }
 
         public void SetOffline(UpdateModel updateModel)
@@ -32,7 +32,7 @@ namespace ApplicationUpdater
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
 
-            ResultEvetnt(process.Process(updateModel), null);
+            process.Process(updateModel);
         }
 
         public void CheckVersion(UpdateModel updateModel)
