@@ -33,7 +33,7 @@ namespace ApplicationUpdater.Processes
                 throw new Exception($"There is no substitution application in the catalog {pathToOldApplication}");
             }
 
-            CopyAll(pathToOldApplication, model.IntepubDirectory, true, "Copy file: {0}");
+            CopyAll(pathToOldApplication, model.UserParams.IntepubDirectory, true, "Copy file: {0}");
         }
 
         private void SetLastUpdatePath(UpdateModel model)
@@ -90,7 +90,7 @@ namespace ApplicationUpdater.Processes
 
         private DirectoryInfo GetBackupPath(UpdateModel updateModel, DateTime dateTime)
         {
-            return new DirectoryInfo(Path.Combine(updateModel.BackupDirectory.FullName, dateTime.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture)));
+            return new DirectoryInfo(Path.Combine(updateModel.UserParams.BackupDirectory.FullName, dateTime.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture)));
         }
     }
 }

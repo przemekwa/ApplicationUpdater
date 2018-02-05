@@ -12,13 +12,13 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            var unZipDirectory = Path.Combine(model.BackupDirectory.FullName, Consts.DirectoriesNames.NewApplication);
+            var unZipDirectory = Path.Combine(model.UserParams.BackupDirectory.FullName, Consts.DirectoriesNames.NewApplication);
 
             Directory.CreateDirectory(unZipDirectory);
 
-            UpdateProcess($"Unzip {model.PathToZipFile.FullName} to {unZipDirectory}");
+            UpdateProcess($"Unzip {model.UserParams.PathToZipFile.FullName} to {unZipDirectory}");
 
-            ZipFile.ExtractToDirectory(model.PathToZipFile.FullName, unZipDirectory);
+            ZipFile.ExtractToDirectory(model.UserParams.PathToZipFile.FullName, unZipDirectory);
 
             model.UnZipDirectory = new DirectoryInfo(unZipDirectory);
 

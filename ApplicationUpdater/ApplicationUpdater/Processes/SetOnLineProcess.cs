@@ -19,7 +19,7 @@ namespace ApplicationUpdater.Processes
                 return null;
             }
 
-            var file = model.IntepubDirectory
+            var file = model.UserParams.IntepubDirectory
                 .GetFiles()
                 .SingleOrDefault(s => s.Name == $"{offLineFileName}");
 

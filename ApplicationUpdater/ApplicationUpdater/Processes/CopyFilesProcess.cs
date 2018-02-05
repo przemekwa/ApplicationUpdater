@@ -11,7 +11,7 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            CopyAll(model.NewApplicationDirectory, model.IntepubDirectory, true, "Update file: {0}");
+            CopyAll(model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
 
             return null;
         }

@@ -13,7 +13,7 @@ namespace ApplicationUpdater.Processes
         public string Question
         {
             get {
-                return  $"{_question} [Y]es, [N]o, [C]ancel(Stop application)? " ; }
+                return  $"{_question} [Y]es, [N]o, [C]ancel? " ; }
             set { _question = value; }
         }
 

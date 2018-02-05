@@ -12,7 +12,7 @@ namespace ApplicationUpdater.Processes
     {
         public ProcesEventResult Process(UpdateModel model)
         {
-            var webConfigPath = new FileInfo(Path.Combine(model.IntepubDirectory.FullName, "Web.config"));
+            var webConfigPath = new FileInfo(Path.Combine(model.UserParams.IntepubDirectory.FullName, "Web.config"));
 
             if (webConfigPath.Exists == false)
             {
@@ -32,11 +32,11 @@ namespace ApplicationUpdater.Processes
                 return ProcesEventResult.ERROR;
             }
 
-            appVersionElement.SetAttributeValue("value", model.Version);
+            appVersionElement.SetAttributeValue("value", model.UserParams.Version);
 
             xmlDoc.Save(webConfigPath.FullName);
 
-            UpdateProcess($"The version { model.Version} has been set in web.config");
+            UpdateProcess($"The version { model.UserParams.Version} has been set in web.config");
 
             return new ProcesEventResult
             {

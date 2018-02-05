@@ -23,14 +23,14 @@ namespace ApplicationUpdater.Processes
 
             Directory.CreateDirectory(backupDirectoryPath);
 
-            model.BackupDirectory = new DirectoryInfo(backupDirectoryPath);
+            model.UserParams.BackupDirectory = new DirectoryInfo(backupDirectoryPath);
 
             return null;
         }
 
         private string GetBackupPath(UpdateModel updateModel, int index)
         {
-            return Path.Combine(updateModel.BackupDirectory.FullName, DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture), index.ToString());
+            return Path.Combine(updateModel.UserParams.BackupDirectory.FullName, DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture), index.ToString());
         }
     }
 }

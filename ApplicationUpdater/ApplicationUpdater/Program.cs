@@ -16,9 +16,10 @@ namespace ApplicationUpdater
             try
             {
                 Console.CursorVisible = false;
+
                 var updateModel = GetUpdateModel(args);
 
-                ConsoleEvent(new ConsoleWriteProcess { Msg = "Preparing the data model" }, null);
+                Console.WriteLine(updateModel.UserParams.ToString());
 
                 var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy();
 
@@ -28,7 +29,7 @@ namespace ApplicationUpdater
 
                 var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy);
 
-                RezultEvent(ProcesEventResult.OK, null);
+              
 
                 iISAplicationUpdater.Update(updateModel);
             }
@@ -107,11 +108,14 @@ namespace ApplicationUpdater
 
             var updateModel = new UpdateModel
             {
-                PathToZipFile = new FileInfo(GetParam(args, 0, "PathToZipFile")),
-                BackupDirectory = new DirectoryInfo(GetParam(args, 1, "BackupDirectory")),
-                IntepubDirectory = new DirectoryInfo(GetParam(args, 2, "IntepubDirectory")),
-                Version = GetParam(args, 3, "Version"),
-                IsUndoProcess = bool.Parse(GetParam(args, 4, "IsUndoProcess"))
+                UserParams = new UserParams
+                {
+                    PathToZipFile = new FileInfo(GetParam(args, 0, "PathToZipFile")),
+                    BackupDirectory = new DirectoryInfo(GetParam(args, 1, "BackupDirectory")),
+                    IntepubDirectory = new DirectoryInfo(GetParam(args, 2, "IntepubDirectory")),
+                    Version = GetParam(args, 3, "Version"),
+                    IsUndoProcess = bool.Parse(GetParam(args, 4, "IsUndoProcess"))
+                }
             };
 
             return updateModel;

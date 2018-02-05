@@ -125,7 +125,7 @@ namespace ApplicationUpdater
 
         public void Update(UpdateModel updateModel)
         {
-            if (updateModel.IsUndoProcess)
+            if (updateModel.UserParams.IsUndoProcess)
             {
                 ExecuteProcess(new List<Action<UpdateModel>>
                 {

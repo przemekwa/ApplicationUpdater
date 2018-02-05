@@ -20,13 +20,13 @@ namespace ApplicationUpdater.Processes
                 return ProcesEventResult.STOP;
             }
 
-            var file = model.IntepubDirectory
+            var file = model.UserParams.IntepubDirectory
                 .GetFiles()
                 .SingleOrDefault(s => s.Name == $"{offLineFileName}");
 
             if (file == null ||file.Exists == false)
             {
-                var file2 = model.IntepubDirectory
+                var file2 = model.UserParams.IntepubDirectory
                 .GetFiles()
                 .SingleOrDefault(s => s.Name == $"app_offline.htm");
 
