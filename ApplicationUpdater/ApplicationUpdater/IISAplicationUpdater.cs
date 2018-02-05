@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +11,12 @@ namespace ApplicationUpdater
     {
         public IUpdateProcess UpdateProcess { get; private set; }
 
-        public ILogger Logger { get; private set; }
+       
 
-        public IISAplicationUpdater(IUpdateProcess selgrosApplicationUpdateStrategy, ILogger logger)
+        public IISAplicationUpdater(IUpdateProcess selgrosApplicationUpdateStrategy)
         {
             UpdateProcess = selgrosApplicationUpdateStrategy;
-            Logger = logger;
+           
         }
 
         public void Update(UpdateModel updateModel)

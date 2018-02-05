@@ -1,5 +1,4 @@
 ﻿using ApplicationUpdater.Processes;
-using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +9,7 @@ namespace ApplicationUpdater
 {
     public class SelgrosApplicationUpdateStrategy : IUpdateProcess
     {
-        public ILogger Logger { get; private set; }
-
-        public SelgrosApplicationUpdateStrategy(ILogger logger)
-        {
-            Logger = logger;
-        }
+       
 
         public event EventHandler UpdateEvent; 
         public event EventHandler ConfirmEvent;

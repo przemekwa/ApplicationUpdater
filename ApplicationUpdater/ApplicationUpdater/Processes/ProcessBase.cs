@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,12 +13,7 @@ namespace ApplicationUpdater.Processes
         public event EventHandler ProcessEvent;
         public event EventHandler ConfirmEvent;
 
-        public ILogger Log { get; set; }
-
-        public ProcessBase()
-        {
-             LogManager.GetLogger(this.GetType().Name);
-        }
+       
 
         protected virtual bool Confirm(string question)
         {

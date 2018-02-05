@@ -1,21 +1,14 @@
 ﻿using ApplicationUpdater.Processes;
-using NLog;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationUpdater
 {
-    public class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            var logger = LogManager.GetLogger("ApplicationUpdater");
-
             Console.WriteLine("Application update", null);
 
             try
@@ -25,13 +18,13 @@ namespace ApplicationUpdater
 
                 ConsoleEvent(new ConsoleWriteProcess { Msg = "Preparing the data model" }, null);
 
-                var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(logger);
+                var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy();
 
                 selgrosApplicationUpdateStrategy.UpdateEvent += ConsoleEvent;
                 selgrosApplicationUpdateStrategy.ConfirmEvent += GetConfirmation;
                 selgrosApplicationUpdateStrategy.ResultEvetnt += RezultEvent;
 
-                var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy, logger);
+                var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy);
 
                 RezultEvent(ProcesEventResult.OK, null);
 
@@ -39,8 +32,6 @@ namespace ApplicationUpdater
             }
             catch (Exception e)
             {
-                logger.Error(e);
-
                 Console.WriteLine($"An error occurred during the update: {e.Message}");
             }
 
@@ -102,7 +93,7 @@ namespace ApplicationUpdater
 
             pc.Key = key;
 
-            ConsoleEvent( new ConsoleWriteProcess { Msg = pc.Key.ToString() }, null);
+            ConsoleEvent(new ConsoleWriteProcess { Msg = pc.Key.ToString() }, null);
         }
 
         private static UpdateModel GetUpdateModel(string[] args)
@@ -118,7 +109,7 @@ namespace ApplicationUpdater
                 BackupDirectory = new DirectoryInfo(GetParam(args, 1, "BackupDirectory")),
                 IntepubDirectory = new DirectoryInfo(GetParam(args, 2, "IntepubDirectory")),
                 Version = GetParam(args, 3, "Version"),
-                IsUndoProcess =  bool.Parse(GetParam(args, 4, "IsUndoProcess"))
+                IsUndoProcess = bool.Parse(GetParam(args, 4, "IsUndoProcess"))
             };
 
             return updateModel;

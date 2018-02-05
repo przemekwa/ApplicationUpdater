@@ -12,9 +12,6 @@ namespace ApplicationUpdater
         {
             public const string OldApplication = "old-application";
             public const string NewApplication = "new-application";
-
         }
-
-        
     }
 }
