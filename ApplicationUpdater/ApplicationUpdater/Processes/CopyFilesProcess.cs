@@ -7,10 +7,21 @@ using System.Threading.Tasks;
 
 namespace ApplicationUpdater.Processes
 {
-    public class CopyFilesProcess : ProcessBase, IProcess<UpdateModel>
+    public class CopyFilesProcess : ProcessBase
     {
+        public CopyFilesProcess() : base("Update application")
+        {
+        }
+
+       
+
         public ProcesEventResult Process(UpdateModel model)
         {
+            if (Confirm("Do you want to update application?") == false)
+            {
+                return ProcesEventResult.STOP;
+            }
+
             CopyAll(model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
 
             return null;

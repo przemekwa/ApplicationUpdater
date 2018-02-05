@@ -10,6 +10,11 @@ namespace ApplicationUpdater.Processes
 {
     public class EditWebConfigProcess : ProcessBase, IProcess<UpdateModel>
     {
+        public EditWebConfigProcess() : base("Edit Web.Config file")
+        {
+        }
+
+
         public ProcesEventResult Process(UpdateModel model)
         {
             var webConfigPath = new FileInfo(Path.Combine(model.UserParams.IntepubDirectory.FullName, "Web.config"));

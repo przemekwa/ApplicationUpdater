@@ -9,6 +9,10 @@ namespace ApplicationUpdater.Processes
 {
     public class CheckVersionProcess: ProcessBase, IProcess<UpdateModel>
     {
+        public CheckVersionProcess() : base("Checking files")
+        {
+        }
+
         public ProcesEventResult Process(UpdateModel model)
         {
             var inetpubFiles = Directory.GetFiles(model.UserParams.IntepubDirectory.FullName, "*.*", SearchOption.AllDirectories)

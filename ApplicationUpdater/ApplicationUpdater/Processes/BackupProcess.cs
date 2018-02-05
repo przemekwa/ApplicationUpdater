@@ -9,6 +9,10 @@ namespace ApplicationUpdater.Processes
 {
     public class BackupProcess : ProcessBase, IProcess<UpdateModel>
     {
+        public BackupProcess() : base("Backup application Files")
+        {
+        }
+
         public ProcesEventResult Process(UpdateModel model)
         {
             var backupDirectory = Directory.CreateDirectory(Path.Combine(model.UserParams.BackupDirectory.FullName, Consts.DirectoriesNames.OldApplication));

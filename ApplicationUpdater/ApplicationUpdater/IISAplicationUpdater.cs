@@ -11,24 +11,23 @@ namespace ApplicationUpdater
     {
         public IUpdateProcess UpdateProcess { get; private set; }
 
-       
-
         public IISAplicationUpdater(IUpdateProcess selgrosApplicationUpdateStrategy)
         {
             UpdateProcess = selgrosApplicationUpdateStrategy;
-           
+        }
+
+        private void ExecuteProcess(IEnumerable<Action<UpdateModel>> actions, UpdateModel updateModel)
+        {
+            foreach (var action in actions)
+            {
+               
+                action.Invoke(updateModel);
+            }
         }
 
         public void Update(UpdateModel updateModel)
         {
-            try
-            {
-                UpdateProcess.Update(updateModel);
-            }
-            finally
-            {
-                UpdateProcess.CreateReport(updateModel);
-            }
+           ExecuteProcess(UpdateProcess.GetProcess(updateModel), updateModel);
         }
     }
 }

@@ -10,6 +10,10 @@ namespace ApplicationUpdater.Processes
 {
     public class UnzipProcess: ProcessBase, IProcess<UpdateModel>
     {
+        public UnzipProcess() : base("Un zipping")
+        {
+        }
+
         public ProcesEventResult Process(UpdateModel model)
         {
             var unZipDirectory = Path.Combine(model.UserParams.BackupDirectory.FullName, Consts.DirectoriesNames.NewApplication);

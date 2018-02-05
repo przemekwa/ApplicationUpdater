@@ -13,8 +13,13 @@ namespace ApplicationUpdater.Processes
         private const string offLineFileName = "_app_offline.htm";
         private const string searchPattern = "Trwa aktualizacja danych";
 
+        public SetOffLineProcess() : base("Set off line")
+        {
+        }
+
         public ProcesEventResult Process(UpdateModel model)
         {
+
             if (Confirm("Do you want to go OFFLINE mode?") == false)
             {
                 return ProcesEventResult.STOP;

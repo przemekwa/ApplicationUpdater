@@ -13,13 +13,18 @@ namespace ApplicationUpdater.Processes
         public event EventHandler ProcessEvent;
         public event EventHandler ConfirmEvent;
 
-       
+        public string Name { get; set; }
+
+        public ProcessBase(string name)
+        {
+            this.Name = name;
+        }
 
         protected virtual bool Confirm(string question)
         {
             var processConfirmation = new ProcessConfirmation
             {
-                Question = question
+                Question = $"[{this.Name}] {question}"
             };
 
             ConfirmEvent(processConfirmation, new EventArgs());
@@ -31,7 +36,7 @@ namespace ApplicationUpdater.Processes
         {
             var p = new ConsoleWriteProcess
             {
-                Msg = msg,
+                Msg = $"[{this.Name}] {msg}" ,
                 NewLine = isNewLine
             };
 

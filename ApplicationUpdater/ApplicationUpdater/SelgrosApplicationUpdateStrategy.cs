@@ -9,8 +9,6 @@ namespace ApplicationUpdater
 {
     public class SelgrosApplicationUpdateStrategy : IUpdateProcess
     {
-       
-
         public event EventHandler UpdateEvent; 
         public event EventHandler ConfirmEvent;
         public event EventHandler ResultEvetnt;
@@ -123,21 +121,19 @@ namespace ApplicationUpdater
 
         }
 
-        public void Update(UpdateModel updateModel)
+        public IEnumerable<Action<UpdateModel>> GetProcess(UpdateModel updateModel)
         {
             if (updateModel.UserParams.IsUndoProcess)
             {
-                ExecuteProcess(new List<Action<UpdateModel>>
+                return new List<Action<UpdateModel>>
                 {
                     SetOffline,
                     UndoProcess,
                     SetOnline
-                }, updateModel);
-
-                return;
+                };
             }
 
-            ExecuteProcess(new List<Action<UpdateModel>>
+            return new List<Action<UpdateModel>>
             {
                 PrepareEnviroment,
                 SetOffline,
@@ -148,15 +144,9 @@ namespace ApplicationUpdater
                 VerifyCopy,
                 EditWebConfig,
                 SetOnline
-            }, updateModel);
+            };
         }
 
-        private void ExecuteProcess(IEnumerable<Action<UpdateModel>> actions, UpdateModel updateModel)
-        {
-            foreach (var action in actions)
-            {
-                action.Invoke(updateModel);
-            }
-        }
+       
     }
 }

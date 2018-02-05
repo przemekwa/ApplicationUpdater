@@ -12,8 +12,14 @@ namespace ApplicationUpdater.Processes
     {
         private const string offLineFileName = "app_offline.htm";
 
+        public SetOnLineProcess() : base("Set on line")
+        {
+        }
+
         public ProcesEventResult Process(UpdateModel model)
         {
+            model.CurrentProcessName = "Set application online";
+
             if (Confirm("Do you want to go ONLINE mode?") == false)
             {
                 return null;

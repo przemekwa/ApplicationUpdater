@@ -10,6 +10,12 @@ namespace ApplicationUpdater.Processes
 {
     public class PrepareEnviroment : ProcessBase, IProcess<UpdateModel>
     {
+        public PrepareEnviroment() : base("Prepare enviroment")
+        {
+        }
+
+      
+
         public ProcesEventResult Process(UpdateModel model)
         {
             var index = 0;

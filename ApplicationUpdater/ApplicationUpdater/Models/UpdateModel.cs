@@ -5,6 +5,8 @@ namespace ApplicationUpdater
 {
     public class UpdateModel
     {
+        public string CurrentProcessName { get; set; }
+
         public DirectoryInfo UnZipDirectory { get; internal set; }
         public DirectoryInfo NewApplicationDirectory { get; internal set; }
         public DirectoryInfo OldApplicationDirectory { get; internal set; }

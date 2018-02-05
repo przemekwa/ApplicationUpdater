@@ -10,6 +10,13 @@ namespace ApplicationUpdater.Processes
 {
     public class UndoProcess : ProcessBase, IProcess<UpdateModel>
     {
+        public UndoProcess() : base("Undo update")
+        {
+        }
+
+  
+
+
         public ProcesEventResult Process(UpdateModel model)
         {
             SetLastUpdatePath(model);
