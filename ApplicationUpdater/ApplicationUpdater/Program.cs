@@ -1,5 +1,6 @@
 ﻿using ApplicationUpdater.Processes;
 using Microsoft.Extensions.Configuration;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,11 +16,9 @@ namespace ApplicationUpdater
         {
             Consts.Header.WriteHeader();
 
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var di = new Di(null, ConsoleEvent, GetConfirmation, RezultEvent);
 
-            IConfigurationRoot configuration = builder.Build();
+            di.Build();
 
             try
             {
@@ -29,13 +28,9 @@ namespace ApplicationUpdater
 
                 Console.WriteLine(updateModel.UserParams.ToString());
 
-                var selgrosApplicationUpdateStrategy = new SelgrosApplicationUpdateStrategy(configuration);
+                var selgrosApplicationUpdateStrategy = di.GetService<SelgrosApplicationUpdateStrategy>();
 
-                selgrosApplicationUpdateStrategy.UpdateEvent += ConsoleEvent;
-                selgrosApplicationUpdateStrategy.ConfirmEvent += GetConfirmation;
-                selgrosApplicationUpdateStrategy.ResultEvetnt += RezultEvent;
-
-                var iISAplicationUpdater = new IISAplicationUpdater(selgrosApplicationUpdateStrategy);
+                var iISAplicationUpdater = di.GetService<IISAplicationUpdater>() ;
 
                 iISAplicationUpdater.Update(updateModel);
             }
