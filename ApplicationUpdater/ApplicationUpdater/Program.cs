@@ -128,8 +128,6 @@ namespace ApplicationUpdater
                 }
             };
 
-          
-
             return updateModel;
         }
 
