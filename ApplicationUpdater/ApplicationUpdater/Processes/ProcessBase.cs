@@ -66,6 +66,7 @@ namespace ApplicationUpdater.Processes
 
             foreach (FileInfo fi in source.GetFiles())
             {
+                //[TODO] Musi to byc bardziej zaawansowane. Wildcards
                 if (excludePath != null && excludePath.Any(s => fi.FullName.Contains(s)))
                 {
                     continue;
