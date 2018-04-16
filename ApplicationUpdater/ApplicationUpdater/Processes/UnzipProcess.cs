@@ -14,6 +14,7 @@ namespace ApplicationUpdater.Processes
         {
         }
 
+
         public ProcesEventResult Process(UpdateModel model)
         {
             var unZipDirectory = Path.Combine(model.UserParams.BackupDirectory.FullName, Consts.DirectoriesNames.NewApplication);

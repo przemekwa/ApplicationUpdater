@@ -148,10 +148,10 @@ namespace ApplicationUpdater
             return new List<Action<UpdateModel>>
             {
                 PrepareEnviroment,
-                SetOffline,
                 Unzip,
                 CheckVersion,
                 MakeBackup,
+                SetOffline,
                 CopyFiles,
                 VerifyCopy,
                 EditWebConfig,

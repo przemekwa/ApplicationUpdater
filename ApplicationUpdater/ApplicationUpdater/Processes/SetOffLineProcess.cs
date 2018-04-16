@@ -19,7 +19,6 @@ namespace ApplicationUpdater.Processes
 
         public ProcesEventResult Process(UpdateModel model)
         {
-
             if (Confirm("Do you want to go OFFLINE mode?") == false)
             {
                 return GetProcesEventResult("SKIP");

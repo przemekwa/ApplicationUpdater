@@ -96,7 +96,7 @@ namespace ApplicationUpdater
             {
                 key = Console.ReadKey(true).Key;
             }
-
+                
             if (key == ConsoleKey.C)
             {
                 Environment.Exit(0);
