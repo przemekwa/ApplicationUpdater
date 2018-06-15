@@ -1,10 +1,7 @@
-﻿using ApplicationUpdater.Processes;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Ninject;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace ApplicationUpdater
 {
