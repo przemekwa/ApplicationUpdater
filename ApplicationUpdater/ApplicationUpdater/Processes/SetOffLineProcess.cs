@@ -38,12 +38,11 @@ namespace ApplicationUpdater.Processes
                 {
                     throw new Exception("File not found");
                 }
-                UpdateDateTimeInFile(file2);
 
                 return GetProcesEventResult("Successful");
             }
 
-            UpdateDateTimeInFile(file);
+            
             File.Delete(file.FullName);
 
             UpdateProcess($"Switched application into OFFLINE mode");
@@ -52,21 +51,21 @@ namespace ApplicationUpdater.Processes
 
         }
 
-        private void UpdateDateTimeInFile(FileInfo file)
-        {
-            var lines = File.ReadAllLines(file.FullName);
+        //private void UpdateDateTimeInFile(FileInfo file)
+        //{
+        //    var lines = File.ReadAllLines(file.FullName);
 
-            var index = lines.Select((s, i) => new { i, s })
-                .Where(t => t.s.Contains(searchPattern))
-                .Select(t => t.i)
-                .First();
+        //    var index = lines.Select((s, i) => new { i, s })
+        //        .Where(t => t.s.Contains(searchPattern))
+        //        .Select(t => t.i)
+        //        .First();
 
-            var dateTimeValue = DateTime.Now.AddHours(1).ToString("HH:mm");
+        //    var dateTimeValue = DateTime.Now.AddMinutes(3).ToString("HH:mm");
 
-            lines[index] = $"Trwa aktualizacja danych. Do godz. {dateTimeValue} NPG bedzie niedostepny. <br/><br/> W naglych przypadkach prosze o kontakt pod numerem: 695 877 795";
+        //    lines[index] = $"Trwa aktualizacja danych. Do godz. {dateTimeValue} NPG bedzie niedostepny. <br/><br/> W naglych przypadkach prosze o kontakt pod numerem: 695 877 795";
 
-            File.WriteAllLines(Path.Combine(file.DirectoryName, "app_offline.htm"), lines);
+        //    File.WriteAllLines(Path.Combine(file.DirectoryName, "app_offline.htm"), lines);
            
-        }
+        //}
     }
 }
