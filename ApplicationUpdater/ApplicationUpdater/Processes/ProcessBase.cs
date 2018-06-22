@@ -72,7 +72,7 @@ namespace ApplicationUpdater.Processes
 
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
 
-                UpdateProcess(string.Format(msgFormat,   fi.FullName.Replace(rootsourcePath, string.Empty)));
+                UpdateProcess(string.Format(msgFormat, fi.FullName.Replace(rootsourcePath, string.Empty)));
             }
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
