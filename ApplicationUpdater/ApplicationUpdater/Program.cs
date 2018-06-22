@@ -27,6 +27,9 @@ namespace ApplicationUpdater
 
                 var iISAplicationUpdater = di.GetService<IISAplicationUpdater>() ;
 
+                Console.WriteLine("Start update?...");
+                Console.ReadKey();
+                
                 iISAplicationUpdater.Update(updateModel);
             }
             catch (Exception e)

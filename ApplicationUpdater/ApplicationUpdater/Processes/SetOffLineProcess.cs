@@ -20,26 +20,17 @@ namespace ApplicationUpdater.Processes
                 return GetProcesEventResult("SKIP");
             }
 
-            var file = model.UserParams.IntepubDirectory
+            var fileOffLine = model.UserParams.IntepubDirectory
                 .GetFiles()
                 .SingleOrDefault(s => s.Name == $"{offLineFileName}");
 
-            if (file == null ||file.Exists == false)
+            if (fileOffLine == null || fileOffLine.Exists == false)
             {
-                var file2 = model.UserParams.IntepubDirectory
-                .GetFiles()
-                .SingleOrDefault(s => s.Name == $"app_offline.htm");
-
-                if (file2 == null || file2.Exists == false)
-                {
-                    throw new Exception("File not found");
-                }
-
-                return GetProcesEventResult("Successful");
+                return ProcesEventResult.ERROR;
             }
 
-            
-            File.Delete(file.FullName);
+            File.Copy(fileOffLine.FullName, Path.Combine(fileOffLine.DirectoryName, "app_offline.htm"));
+            File.Delete(fileOffLine.FullName);
 
             UpdateProcess($"Switched application into OFFLINE mode");
 
