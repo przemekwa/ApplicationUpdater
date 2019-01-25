@@ -21,7 +21,7 @@ namespace ApplicationUpdater
             ResultEvetnt = resultEvetnt;
         }
 
-        public void Build()
+        public void Build(string strategy)
         {
             var builder = new ConfigurationBuilder()
                                .SetBasePath(Directory.GetCurrentDirectory())
@@ -30,12 +30,28 @@ namespace ApplicationUpdater
             Kernel.Bind<IISAplicationUpdater>().ToSelf();
             Kernel.Bind<IConfigurationRoot>().ToMethod(c => builder.Build());
 
-            Kernel.Bind<IUpdateProcess>().To<SelgrosApplicationUpdateStrategy>().OnActivation(s =>
+            switch (strategy)
             {
-                s.ConfirmEvent += ConfirmEvent;
-                s.ResultEvetnt += ResultEvetnt;
-                s.UpdateEvent += UpdateEvent;
-            });
+                case "Selgros":
+                    Kernel.Bind<IUpdateProcess>().To<SelgrosApplicationUpdateStrategy>().OnActivation(s =>
+                                    {
+                                        s.ConfirmEvent += ConfirmEvent;
+                                        s.ResultEvetnt += ResultEvetnt;
+                                        s.UpdateEvent += UpdateEvent;
+                                    });
+                    break;
+                case "Orlen":
+                    Kernel.Bind<IUpdateProcess>().To<OrlenApplicationUpdateStrategy>().OnActivation(s =>
+                                    {
+                                        s.ConfirmEvent += ConfirmEvent;
+                                        s.ResultEvetnt += ResultEvetnt;
+                                        s.UpdateEvent += UpdateEvent;
+                                    });
+                    break;
+
+                default:
+                    throw new Exception("No proper strategy set");
+            }
         }
 
         public T GetService<T>()

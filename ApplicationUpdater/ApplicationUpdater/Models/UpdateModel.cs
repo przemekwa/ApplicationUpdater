@@ -25,10 +25,11 @@ namespace ApplicationUpdater
         public DirectoryInfo IntepubDirectory { get; internal set; }
         public string Version { get; internal set; }
         public bool IsUndoProcess { get; internal set; }
+        public string Strategy { get; internal set; }
 
         public override string ToString()
         {
-            return $" Path to zip file: {PathToZipFile} \n BackupDirectory:  {BackupDirectory} \n IntepubDirectory: {IntepubDirectory} \n New version:      {Version} \n Is undo process:  {IsUndoProcess} ";
+            return $"Strategy: {Strategy}   Path to zip file: {PathToZipFile} \n BackupDirectory:  {BackupDirectory} \n IntepubDirectory: {IntepubDirectory} \n New version:      {Version} \n Is undo process:  {IsUndoProcess} ";
         }
 
     }

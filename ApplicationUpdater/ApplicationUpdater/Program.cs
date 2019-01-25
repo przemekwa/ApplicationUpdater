@@ -12,18 +12,16 @@ namespace ApplicationUpdater
             Consts.Header.WriteHeader();
             Console.CursorVisible = false;
 
+            var updateModel = GetUpdateModel(args);
+
             var di = new Di(null, ConsoleEvent, GetConfirmation, RezultEvent);
 
-            di.Build();
+            di.Build(updateModel.UserParams.Strategy);
 
             try
             {
-                var updateModel = GetUpdateModel(args);
-
                 Console.WriteLine(updateModel.UserParams.ToString());
                 Console.WriteLine();
-
-                var selgrosApplicationUpdateStrategy = di.GetService<SelgrosApplicationUpdateStrategy>();
 
                 var iISAplicationUpdater = di.GetService<IISAplicationUpdater>() ;
 
@@ -109,7 +107,7 @@ namespace ApplicationUpdater
 
         private static UpdateModel GetUpdateModel(string[] args)
         {
-            if (args.Length != 5)
+            if (args.Length != 6)
             {
                 throw new ArgumentException("No suitable parameters");
             }
@@ -118,11 +116,12 @@ namespace ApplicationUpdater
             {
                 UserParams = new UserParams
                 {
-                    PathToZipFile = new FileInfo(GetParam(args, 0, "PathToZipFile")),
-                    BackupDirectory = new DirectoryInfo(GetParam(args, 1, "BackupDirectory")),
-                    IntepubDirectory = new DirectoryInfo(GetParam(args, 2, "IntepubDirectory")),
-                    Version = GetParam(args, 3, "Version"),
-                    IsUndoProcess = bool.Parse(GetParam(args, 4, "IsUndoProcess"))
+                    Strategy = GetParam(args,0,"Strategy"),
+                    PathToZipFile = new FileInfo(GetParam(args, 1, "PathToZipFile")),
+                    BackupDirectory = new DirectoryInfo(GetParam(args, 2, "BackupDirectory")),
+                    IntepubDirectory = new DirectoryInfo(GetParam(args, 3, "IntepubDirectory")),
+                    Version = GetParam(args, 4, "Version"),
+                    IsUndoProcess = bool.Parse(GetParam(args, 5, "IsUndoProcess"))
                 }
             };
 
