@@ -6,9 +6,9 @@ namespace ApplicationUpdater
     {
         public string CurrentProcessName { get; set; }
 
-        public DirectoryInfo UnZipDirectory { get; internal set; }
-        public DirectoryInfo NewApplicationDirectory { get; internal set; }
-        public DirectoryInfo OldApplicationDirectory { get; internal set; }
+        public DirectoryInfo UnZipDirectory { get; set; }
+        public DirectoryInfo NewApplicationDirectory { get; set; }
+        public DirectoryInfo OldApplicationDirectory { get; set; }
        
         public UserParams UserParams { get; set; }
 
@@ -21,8 +21,8 @@ namespace ApplicationUpdater
     public class UserParams
     {
         public FileInfo PathToZipFile { get; internal set; }
-        public DirectoryInfo BackupDirectory { get; internal set; }
-        public DirectoryInfo IntepubDirectory { get; internal set; }
+        public DirectoryInfo BackupDirectory { get; set; }
+        public DirectoryInfo IntepubDirectory { get; set; }
         public string Version { get; internal set; }
         public bool IsUndoProcess { get; internal set; }
         public string Strategy { get; internal set; }
