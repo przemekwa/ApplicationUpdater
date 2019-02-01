@@ -38,7 +38,7 @@ namespace ApplicationUpdater.Processes
             {
                 var fileNameToCheck = inetpubFile.FullName.Replace(model.UserParams.IntepubDirectory.FullName, string.Empty);
 
-                var file = newAppFiles.SingleOrDefault(s => s.FullName.Replace(model.UnZipDirectory.FullName + "\\app\\", "").Equals(fileNameToCheck, StringComparison.CurrentCultureIgnoreCase));
+                var file = newAppFiles.SingleOrDefault(s => s.FullName.Replace(model.UnZipDirectory.FullName + "\\app", "").Equals(fileNameToCheck, StringComparison.CurrentCultureIgnoreCase));
 
                 if (file == null)
                 {
