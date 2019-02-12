@@ -29,6 +29,7 @@ namespace ApplicationUpdater
 
             Kernel.Bind<IISAplicationUpdater>().ToSelf();
             Kernel.Bind<IConfigurationRoot>().ToMethod(c => builder.Build());
+            Kernel.Bind<IEnvironmentManager>().To<EnvironmentManager>();
 
             switch (strategy)
             {

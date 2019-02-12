@@ -8,10 +8,12 @@ namespace ApplicationUpdater.Processes
 {
     public class CheckVersionProcess: ProcessBase, IProcess<UpdateModel>
     {
+        private IEnvironmentManager environmentManager;
         public IEnumerable<string> ExcludeDir { get; set; }
 
-        public CheckVersionProcess(IConfigurationRoot configurationRoot) : base(configurationRoot, "Checking the files")
+        public CheckVersionProcess(IConfigurationRoot configurationRoot, IEnvironmentManager environmentManager) : base(configurationRoot, "Checking the files")
         {
+            this.environmentManager = environmentManager;
         }
 
         public ProcesEventResult Process(UpdateModel model)
@@ -42,7 +44,7 @@ namespace ApplicationUpdater.Processes
 
                 if (file == null)
                 {
-                    UpdateProcess($"No file in the new application {inetpubFile.FullName.Replace(model.UserParams.IntepubDirectory.FullName,string.Empty)}");
+                    UpdateProcess($"No file in the new application {fileNameToCheck}");
                     error = true;
                     continue;
                 }
@@ -56,7 +58,7 @@ namespace ApplicationUpdater.Processes
 
             if (error && Confirm("Errors occurred while checking files. Do you want to continue?") == false)
             {
-                Environment.Exit(0);
+                environmentManager.Exit(0);
             }
 
             return GetProcesEventResult(Consts.ProcesEventResult.Successful);
