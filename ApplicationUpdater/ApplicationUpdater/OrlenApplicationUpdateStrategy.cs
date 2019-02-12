@@ -14,19 +14,22 @@ namespace ApplicationUpdater
 
         public IProcess<UpdateModel> SetOnLineProcess { get; set; }
 
+        public IEnvironmentManager environmentManager;
+
 
         public IConfigurationRoot ConfigurationRoot { get; set; }
 
-        public OrlenApplicationUpdateStrategy(IConfigurationRoot configurationRoot)
+        public OrlenApplicationUpdateStrategy(IConfigurationRoot configurationRoot, IEnvironmentManager environmentManager)
         {
             ConfigurationRoot = configurationRoot;
+            this.environmentManager = environmentManager;
         }
 
        
 
         public void CheckVersion(UpdateModel updateModel)
         {
-            var process = new CheckVersionProcess(ConfigurationRoot);
+            var process = new CheckVersionProcess(ConfigurationRoot, environmentManager);
 
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;

@@ -14,12 +14,14 @@ namespace ApplicationUpdater
 
         public IProcess<UpdateModel> SetOnLineProcess { get; set; }
 
-
+        private IEnvironmentManager environmentManager;
         public IConfigurationRoot ConfigurationRoot { get; set; }
 
-        public SelgrosApplicationUpdateStrategy(IConfigurationRoot configurationRoot)
+        public SelgrosApplicationUpdateStrategy(IConfigurationRoot configurationRoot, IEnvironmentManager environmentManager)
         {
             ConfigurationRoot = configurationRoot;
+            this.environmentManager = environmentManager;
+
         }
 
         public void SetOnline(UpdateModel updateModel)
@@ -44,7 +46,7 @@ namespace ApplicationUpdater
 
         public void CheckVersion(UpdateModel updateModel)
         {
-            var process = new CheckVersionProcess(ConfigurationRoot);
+            var process = new CheckVersionProcess(ConfigurationRoot, environmentManager);
 
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
