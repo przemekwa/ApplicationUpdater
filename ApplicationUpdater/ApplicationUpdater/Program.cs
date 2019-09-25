@@ -128,6 +128,17 @@ namespace ApplicationUpdater
             return updateModel;
         }
 
+        private static DirectoryInfo GetInetpubDirectory(string[] args)
+        {
+            var param = GetParam(args, 3, "IntepubDirectory");
+
+            if (param[param.Length-1] == '/' || param[param.Length-1] == '\\')
+            {
+                param = param.Substring(0,param.Length-1);
+            }
+
+            return new DirectoryInfo(param);
+        }
         private static string GetParam(string[] args, int index, string name)
         {
             if (string.IsNullOrEmpty(args[index]))
