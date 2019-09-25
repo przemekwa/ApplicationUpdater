@@ -29,13 +29,13 @@ namespace ApplicationUpdater
                 Console.ReadKey();
                 
                 iISAplicationUpdater.Update(updateModel);
+                Console.WriteLine("The application has been updated", null);
             }
             catch (Exception e)
             {
                 Console.WriteLine($"An error occurred during the update: {e.Message}");
             }
 
-            Console.WriteLine("The application has been updated", null);
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
