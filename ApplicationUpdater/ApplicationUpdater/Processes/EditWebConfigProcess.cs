@@ -27,7 +27,7 @@ namespace ApplicationUpdater.Processes
                 .Element("configuration")
                 .Element("appSettings")
                 .Elements("add")
-                .SingleOrDefault(s=>s.Attribute("key").Value == "AppVersion");
+                .SingleOrDefault(s=>s.Attribute("key").Value == ConfigurationRoot["Web.Config.AppSettings.Version.KeyName"]);
             
             if (appVersionElement == null)
             {
