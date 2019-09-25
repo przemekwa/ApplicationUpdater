@@ -101,7 +101,7 @@ namespace ApplicationUpdater
 
         public void EditWebConfig(UpdateModel updateModel)
         {
-            var process = new EditWebConfigProcess();
+            var process = new EditWebConfigProcess(ConfigurationRoot);
 
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;
@@ -134,7 +134,7 @@ namespace ApplicationUpdater
 
         public void StartUpdateProcess(UpdateModel updateModel)
         {
-            var process = new StartUpdateProcess(ConfigurationRoot);
+            var process = new StartUpdateProcess(ConfigurationRoot, environmentManager);
 
             process.ProcessEvent += ProcessEvent;
             process.ConfirmEvent += ConfirmEvent;

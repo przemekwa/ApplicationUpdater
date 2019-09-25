@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -7,7 +8,7 @@ namespace ApplicationUpdater.Processes
 {
     public class EditWebConfigProcess : ProcessBase, IProcess<UpdateModel>
     {
-        public EditWebConfigProcess() : base("Edit Web.Config file")
+        public EditWebConfigProcess(IConfigurationRoot configurationRoot ) : base(configurationRoot, "Edit Web.Config file")
         {
         }
 
