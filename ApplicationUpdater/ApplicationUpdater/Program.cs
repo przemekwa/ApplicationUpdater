@@ -32,12 +32,6 @@ namespace ApplicationUpdater
 
                 var iISAplicationUpdater = di.GetService<IISAplicationUpdater>();
 
-                GetConfirmation(new ProcessConfirmation{ 
-                    Key =  ConsoleKey.Spacebar,
-                    Question = "Start update?..."
-                    
-                    }, null);
-
                 iISAplicationUpdater.Update(updateModel);
 
                 Console.WriteLine("The application has been updated", null);

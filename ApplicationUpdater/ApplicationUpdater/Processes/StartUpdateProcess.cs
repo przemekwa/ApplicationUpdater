@@ -5,13 +5,21 @@ namespace ApplicationUpdater.Processes
 {
     public class StartUpdateProcess : ProcessBase, IProcess<UpdateModel>
     {
-        public StartUpdateProcess(IConfigurationRoot configurationRoot) : base(configurationRoot, "Start update")
+        private IEnvironmentManager environmentManager;
+
+        public StartUpdateProcess(IConfigurationRoot configurationRoot, IEnvironmentManager environmentManager) : base(configurationRoot, "Start update")
         {
+            this.environmentManager = environmentManager;
         }
 
         public ProcesEventResult Process(UpdateModel model)
         {
-           return GetProcesEventResult(Consts.ProcesEventResult.Successful);
+            if (Confirm("Do you want to start update?") == false)
+            {
+                environmentManager.Exit(0);
+            }
+
+            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
     }
 }
