@@ -132,6 +132,16 @@ namespace ApplicationUpdater
 
         }
 
+        public void StartUpdateProcess(UpdateModel updateModel)
+        {
+            var process = new StartUpdateProcess(ConfigurationRoot);
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            ResultEvetnt(process.Process(updateModel), null);
+        }
+
         public IEnumerable<Action<UpdateModel>> GetProcess(UpdateModel updateModel)
         {
             if (updateModel.UserParams.IsUndoProcess)
@@ -146,6 +156,7 @@ namespace ApplicationUpdater
 
             return new List<Action<UpdateModel>>
             {
+                StartUpdateProcess,
                 PrepareEnviroment,
                 Unzip,
                 CheckVersion,
