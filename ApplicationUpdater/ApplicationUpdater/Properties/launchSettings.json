@@ -2,7 +2,7 @@
   "profiles": {
     "ApplicationUpdater": {
       "commandName": "Project",
-      "commandLineArgs": "Orlen \"D:\\Pobrane\\Selgros_PG_SPG_QAS_PL_590_artifacts.zip\" \"D:/\" \"D:\\Projects\\Selgros\\PG\\trunk\\SelgrosPG.Presentation\\bin\\Release\\Publish\\\\\" 96.4033 false"
+      "commandLineArgs": "Orlen \"D:\\Pobrane\\Orlen_ZASP_Master_1.8.4.1134_artifacts.zip\" \"D:/\" \"D:\\Temp\\app\\Orlen_ZASP_Master_1.8.4.1134_artifacts\\app\" \"96.4033\" \"false\""
     }
   }
 }

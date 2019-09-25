@@ -2,11 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
 
 namespace ApplicationUpdater
 {
     class Program
     {
+        [DllImport("libc")]
+        public static extern uint getuid();
+
         static void Main(string[] args)
         {
             Consts.Header.WriteHeader();
@@ -20,22 +25,24 @@ namespace ApplicationUpdater
 
             try
             {
+                RequireAdministrator();
+
                 Console.WriteLine(updateModel.UserParams.ToString());
                 Console.WriteLine();
 
-                var iISAplicationUpdater = di.GetService<IISAplicationUpdater>() ;
+                var iISAplicationUpdater = di.GetService<IISAplicationUpdater>();
 
                 Console.WriteLine("Start update?...");
                 Console.ReadKey();
-                
+
                 iISAplicationUpdater.Update(updateModel);
+
                 Console.WriteLine("The application has been updated", null);
             }
             catch (Exception e)
             {
                 Console.WriteLine($"An error occurred during the update: {e.Message}");
             }
-
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
@@ -92,7 +99,7 @@ namespace ApplicationUpdater
             {
                 key = Console.ReadKey(true).Key;
             }
-                
+
             if (key == ConsoleKey.C)
             {
                 Environment.Exit(0);
@@ -116,12 +123,12 @@ namespace ApplicationUpdater
             {
                 UserParams = new UserParams
                 {
-                    Strategy = GetParam(args,0,"Strategy"),
+                    Strategy = GetParam(args, 0, "Strategy"),
                     PathToZipFile = new FileInfo(GetParam(args, 1, "PathToZipFile")),
                     BackupDirectory = new DirectoryInfo(GetParam(args, 2, "BackupDirectory")),
-                    IntepubDirectory = new DirectoryInfo(GetParam(args, 3, "IntepubDirectory")),
+                    IntepubDirectory = GetInetpubDirectory(args),
                     Version = GetParam(args, 4, "Version"),
-                    IsUndoProcess = bool.Parse(GetParam(args, 5, "IsUndoProcess"))
+                    IsUndoProcess = bool.Parse(GetParam(args, 5, "IsUndoProcess")),
                 }
             };
 
@@ -139,6 +146,7 @@ namespace ApplicationUpdater
 
             return new DirectoryInfo(param);
         }
+
         private static string GetParam(string[] args, int index, string name)
         {
             if (string.IsNullOrEmpty(args[index]))
@@ -147,6 +155,29 @@ namespace ApplicationUpdater
             }
 
             return args[index];
+        }
+
+        public static void RequireAdministrator()
+        {
+            string name = System.AppDomain.CurrentDomain.FriendlyName;
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+                {
+                    WindowsPrincipal principal = new WindowsPrincipal(identity);
+                    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+                    {
+                        throw new InvalidOperationException($"Application must be run as administrator. Right click the {name} file and select 'run as administrator'.");
+                    }
+                }
+            }
+            else if (getuid() != 0)
+            {
+                throw new InvalidOperationException($"Application must be run as root/sudo. From terminal, run the executable as 'sudo {name}'");
+            }
+
+
         }
     }
 }
