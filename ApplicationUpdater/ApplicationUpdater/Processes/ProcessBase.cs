@@ -47,12 +47,13 @@ namespace ApplicationUpdater.Processes
             return processConfirmation.Key == ConsoleKey.Y;
         }
 
-        protected virtual void UpdateProcess(string msg, bool isNewLine = true)
+        protected virtual void UpdateProcess(string msg, bool isNewLine = true, bool oneLine = false)
         {
             var p = new ConsoleWriteProcess
             {
                 Msg = $"[{this.Name}] {msg}" ,
-                NewLine = isNewLine
+                NewLine = isNewLine,
+                OneLineMode = oneLine
             };
 
             ProcessEvent(p, new EventArgs { });
@@ -72,7 +73,7 @@ namespace ApplicationUpdater.Processes
 
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
 
-                UpdateProcess(string.Format(msgFormat, fi.FullName.Replace(rootsourcePath, string.Empty)));
+                UpdateProcess(string.Format(msgFormat, fi.FullName.Replace(rootsourcePath, string.Empty)), false, true);
             }
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
@@ -80,6 +81,8 @@ namespace ApplicationUpdater.Processes
                 var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
                 CopyAll(rootsourcePath, diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
             }
+
+              
         }
 
         public IEnumerable<string> GetExcludeFiles(string intepubDirectoryPath)

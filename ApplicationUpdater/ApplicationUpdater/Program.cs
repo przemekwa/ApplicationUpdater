@@ -23,9 +23,11 @@ namespace ApplicationUpdater
 
             di.Build(updateModel.UserParams.Strategy);
 
+         
+
             try
             {
-                //RequireAdministrator();
+               // RequireAdministrator();
 
                 Console.WriteLine(updateModel.UserParams.ToString());
                 Console.WriteLine();
@@ -65,10 +67,30 @@ namespace ApplicationUpdater
         private static void ConsoleEvent(object sender, EventArgs e)
         {
             var d = sender as ConsoleWriteProcess;
-
+            
             if (d.NewLine)
             {
                 Console.WriteLine($"{GetStopWatchString(DateTime.Now)}   {d.Msg}");
+            }
+            else if (d.OneLineMode)
+            {
+                var top = Console.CursorTop-1;
+                
+                Console.SetCursorPosition(0, top);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, top);
+
+                var header = GetStopWatchString(DateTime.Now);
+
+                var line = $"{header}   {d.Msg}";
+
+                if (line.Length > Console.WindowWidth)
+                {
+                    line =line.Substring(0, Console.WindowWidth);
+                }
+
+                Console.WriteLine(line);
+                
             }
             else
             {

@@ -19,8 +19,7 @@ namespace ApplicationUpdater.Processes
                 false, 
                 "Backing up: {0}",
                 this.GetExcludeFiles(model.UserParams.IntepubDirectory.FullName));
-
-
+            
             return GetProcesEventResult("Successful");
         }
     }
