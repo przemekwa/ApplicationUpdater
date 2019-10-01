@@ -65,6 +65,7 @@ namespace ApplicationUpdater
 
         private static void ConsoleEvent(object sender, EventArgs e)
         {
+            Console.CursorVisible = false;
             var consoleWriteProcess = sender as ConsoleWriteProcess;
             
             if (consoleWriteProcess.NewLine)
@@ -87,14 +88,15 @@ namespace ApplicationUpdater
                 {
                     line = line.Substring(0, Console.WindowWidth);
                 }
-
+             
                 Console.WriteLine(line);
-                
             }
             else
             {
                 Console.Write($"{GetStopWatchString(DateTime.Now)}   {consoleWriteProcess.Msg}");
             }
+
+            Console.CursorVisible = true;
         }
 
         private static void GetConfirmation(object sender, EventArgs e)
@@ -132,7 +134,7 @@ namespace ApplicationUpdater
 
         private static UpdateModel GetUpdateModel(string[] args)
         {
-            if (args.Length != 7)
+            if (args.Length != 6)
             {
                 throw new ArgumentException("No suitable parameters. Details on https://github.com/przemekwa/ApplicationUpdater");
             }
