@@ -29,7 +29,7 @@ namespace ApplicationUpdater
 
         public override string ToString()
         {
-            return $"Strategy: {Strategy}   Path to zip file: {PathToZipFile} \n BackupDirectory:  {BackupDirectory} \n IntepubDirectory: {IntepubDirectory} \n New version:      {Version} \n Is undo process:  {IsUndoProcess} ";
+            return $" Strategy:         {Strategy}\n Path to zip file: {PathToZipFile}\n BackupDirectory:  {BackupDirectory} \n IntepubDirectory: {IntepubDirectory} \n New version:      {Version} \n Is undo process:  {IsUndoProcess} ";
         }
 
     }
