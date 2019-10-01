@@ -23,12 +23,11 @@ namespace ApplicationUpdater
 
             di.Build(updateModel.UserParams.Strategy);
 
-         
-
             try
             {
-               // RequireAdministrator();
-
+                #if !DEBUG
+                RequireAdministrator();
+                #endif
                 Console.WriteLine(updateModel.UserParams.ToString());
                 Console.WriteLine();
 
@@ -66,13 +65,13 @@ namespace ApplicationUpdater
 
         private static void ConsoleEvent(object sender, EventArgs e)
         {
-            var d = sender as ConsoleWriteProcess;
+            var consoleWriteProcess = sender as ConsoleWriteProcess;
             
-            if (d.NewLine)
+            if (consoleWriteProcess.NewLine)
             {
-                Console.WriteLine($"{GetStopWatchString(DateTime.Now)}   {d.Msg}");
+                Console.WriteLine($"{GetStopWatchString(DateTime.Now)}   {consoleWriteProcess.Msg}");
             }
-            else if (d.OneLineMode)
+            else if (consoleWriteProcess.OneLineMode)
             {
                 var top = Console.CursorTop-1;
                 
@@ -82,11 +81,11 @@ namespace ApplicationUpdater
 
                 var header = GetStopWatchString(DateTime.Now);
 
-                var line = $"{header}   {d.Msg}";
+                var line = $"{header}   {consoleWriteProcess.Msg}";
 
                 if (line.Length > Console.WindowWidth)
                 {
-                    line =line.Substring(0, Console.WindowWidth);
+                    line = line.Substring(0, Console.WindowWidth);
                 }
 
                 Console.WriteLine(line);
@@ -94,7 +93,7 @@ namespace ApplicationUpdater
             }
             else
             {
-                Console.Write($"{GetStopWatchString(DateTime.Now)}   {d.Msg}");
+                Console.Write($"{GetStopWatchString(DateTime.Now)}   {consoleWriteProcess.Msg}");
             }
         }
 
@@ -133,9 +132,9 @@ namespace ApplicationUpdater
 
         private static UpdateModel GetUpdateModel(string[] args)
         {
-            if (args.Length != 6)
+            if (args.Length != 7)
             {
-                throw new ArgumentException("No suitable parameters");
+                throw new ArgumentException("No suitable parameters. Details on https://github.com/przemekwa/ApplicationUpdater");
             }
 
             var updateModel = new UpdateModel
@@ -158,9 +157,9 @@ namespace ApplicationUpdater
         {
             var param = GetParam(args, 3, "IntepubDirectory");
 
-            if (param[param.Length-1] == '/' || param[param.Length-1] == '\\')
+            if (param[^1] == '/' || param[^1] == '\\')
             {
-                param = param.Substring(0,param.Length-1);
+                param = param[0..^1];
             }
 
             return new DirectoryInfo(param);
@@ -178,25 +177,28 @@ namespace ApplicationUpdater
 
         public static void RequireAdministrator()
         {
-            string name = System.AppDomain.CurrentDomain.FriendlyName;
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            try
             {
-                using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+                string name = System.AppDomain.CurrentDomain.FriendlyName;
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
+                    using WindowsIdentity identity = WindowsIdentity.GetCurrent();
                     WindowsPrincipal principal = new WindowsPrincipal(identity);
                     if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
                     {
                         throw new InvalidOperationException($"Application must be run as administrator. Right click the {name} file and select 'run as administrator'.");
                     }
                 }
+                else if (getuid() != 0)
+                {
+                    throw new InvalidOperationException($"Application must be run as root/sudo. From terminal, run the executable as 'sudo {name}'");
+                }
             }
-            else if (getuid() != 0)
+            catch (Exception)
             {
-                throw new InvalidOperationException($"Application must be run as root/sudo. From terminal, run the executable as 'sudo {name}'");
+                Console.WriteLine("Error when determining administrator");
             }
-
-
         }
     }
 }
