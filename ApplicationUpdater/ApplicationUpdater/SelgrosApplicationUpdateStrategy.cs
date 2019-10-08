@@ -21,7 +21,16 @@ namespace ApplicationUpdater
         {
             ConfigurationRoot = configurationRoot;
             this.environmentManager = environmentManager;
+        }
 
+        public void DeleteFiles(UpdateModel updateModel)
+        {
+            var process = new DeleteFilesProcess(ConfigurationRoot);
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            ResultEvetnt(process.Process(updateModel), null);
         }
 
         public void SetOnline(UpdateModel updateModel)
@@ -162,6 +171,7 @@ namespace ApplicationUpdater
                 CheckVersion,
                 MakeBackup,
                 SetOffline,
+                DeleteFiles,
                 CopyFiles,
                 VerifyCopy,
                 EditWebConfig,

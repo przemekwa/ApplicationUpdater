@@ -2,7 +2,7 @@
   "profiles": {
     "ApplicationUpdater": {
       "commandName": "Project",
-      "commandLineArgs": "Orlen \"D:\\Pobrane\\Orlen_ZASP_Master_1.8.4.1134_artifacts.zip\" \"D:/\" \"D:\\Temp\\app\\Orlen_ZASP_Master_1.8.4.1134_artifacts\\app\" \"96.4033\" \"false\""
+      "commandLineArgs": "Selgros \"D:\\Pobrane\\Orlen_ZASP_Master_1.8.4.1153_artifacts.zip\" \"D:\\Temp\" \"D:\\Temp\\inetpub\" \"96.4033\" \"false\""
     }
   }
 }
