@@ -19,25 +19,23 @@ namespace ApplicationUpdater.Processes
                   
             if (dirList == null || dirList.Any() == false)
             {
-                return GetProcesEventResult("No files to delete");
+                return GetProcesEventResult("No directories to delete");
             }
 
-            foreach (var fileInfo in dirList
-                .Where(s=>s.Exists)
-                .SelectMany(s=>s.GetFiles())
+            foreach (var directoryInfo in dirList
                 .Where(s=>s.Exists))
             {
                 try
                 {
-                    fileInfo.Delete();
+                    directoryInfo.Delete(true);
                 }
                 catch (System.Exception e)
                 {
-                    UpdateProcess($"ERROR on delete file {fileInfo.FullName}", true, false);
+                    UpdateProcess($"ERROR on delete direcotry {directoryInfo.FullName}", true, false);
                     continue;
                 }
 
-                UpdateProcess($"Delete file {fileInfo.FullName}", false, true);
+                UpdateProcess($"Delete file {directoryInfo.FullName}", false, true);
             }
 
 

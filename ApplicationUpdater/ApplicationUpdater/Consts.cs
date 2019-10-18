@@ -27,7 +27,7 @@ namespace ApplicationUpdater
                 Console.WriteLine(@" /~~\ |    |    |___ | \__, /~~\  |  | \__/ | \|       ");
                 Console.WriteLine(@"              __   __       ___  ___  __               ");
                 Console.WriteLine(@"       |   | |__) |  \  /\   |  |__  |__)              ");
-                Console.WriteLine(@"       \__ / |    |__/ /~~\  |  |___ |  \              v6.03");
+                Console.WriteLine(@"       \__ / |    |__/ /~~\  |  |___ |  \              v6.04");
                 Console.WriteLine();
             }
         }
