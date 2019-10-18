@@ -22,19 +22,22 @@ namespace ApplicationUpdater.Processes
                 return GetProcesEventResult("No files to delete");
             }
 
-            foreach (var item in dirList.SelectMany(s=>s.GetFiles()))
+            foreach (var fileInfo in dirList
+                .Where(s=>s.Exists)
+                .SelectMany(s=>s.GetFiles())
+                .Where(s=>s.Exists))
             {
                 try
                 {
-                    item.Delete();
+                    fileInfo.Delete();
                 }
                 catch (System.Exception e)
                 {
-                    UpdateProcess($"ERROR on delete file {item.FullName}", true, false);
+                    UpdateProcess($"ERROR on delete file {fileInfo.FullName}", true, false);
                     continue;
                 }
 
-                UpdateProcess($"Delete file {item.FullName}", false, true);
+                UpdateProcess($"Delete file {fileInfo.FullName}", false, true);
             }
 
 
