@@ -25,7 +25,15 @@ namespace ApplicationUpdater
             this.environmentManager = environmentManager;
         }
 
-       
+        public void DeleteFiles(UpdateModel updateModel)
+        {
+            var process = new DeleteFilesProcess(ConfigurationRoot);
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            ResultEvetnt(process.Process(updateModel), null);
+        }
 
         public void CheckVersion(UpdateModel updateModel)
         {
@@ -144,6 +152,7 @@ namespace ApplicationUpdater
                 Unzip,
                 CheckVersion,
                 MakeBackup,
+                DeleteFiles,
                 CopyFiles,
                 VerifyCopy,
                 EditWebConfig,
