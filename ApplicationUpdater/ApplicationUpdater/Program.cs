@@ -39,9 +39,10 @@ namespace ApplicationUpdater
             }
             catch (Exception e)
             {
-                Console.WriteLine($"An error occurred during the update: {e.Message}");
+                 ConsoleEvent(new ConsoleWriteProcess{Msg= $"[ERROR] {e.Message}",NewLine= true }, null);
             }
 
+            Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
             Console.CursorVisible = true;
@@ -49,7 +50,7 @@ namespace ApplicationUpdater
 
         public static string GetStopWatchString(DateTime ts)
         {
-            return $"{ts.Hour:00}:{ts.Minute:00}:{ts.Second:00}:{(ts.Millisecond / 10):00}";
+            return $"{ts.Hour:00}:{ts.Minute:00}:{ts.Second:00}:{(ts.Millisecond / 10):000}";
         }
 
         private static void RezultEvent(object sender, EventArgs e)

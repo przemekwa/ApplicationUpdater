@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -30,12 +31,12 @@ namespace ApplicationUpdater.Processes
 
             if (fileList == null || fileList.Any() == false)
             {
-                return GetProcesEventResult("No file in app.config to to mini-realese");
+                throw new Exception("No file in app.config to to mini-realese");
             }
 
             if (fileList.Any(s => s.File.Exists == false))
             {
-                return GetProcesEventResult("Not all file exist in new-application");
+                throw new Exception("Not all file exist in new-application");
             }
 
             if (Confirm($"Copy this file(s) \n {fileList.Select(s => s.File.Name).Aggregate((next, current) => { return $"{current}\n {next}"; })}") == false)
