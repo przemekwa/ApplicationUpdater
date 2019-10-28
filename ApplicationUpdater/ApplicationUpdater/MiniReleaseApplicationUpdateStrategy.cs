@@ -63,6 +63,16 @@ namespace ApplicationUpdater
             ResultEvetnt(process.Process(updateModel), null);
         }
 
+         public void MiniReleaseCheckVersion(UpdateModel updateModel)
+        {
+            var process = new MiniReleaseCheckVersionProcess(ConfigurationRoot, environmentManager);
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            ResultEvetnt(process.Process(updateModel), null);
+        }
+
         public void MiniReleaseCopyFiles(UpdateModel updateModel)
         {
             var process = new MiniReleaseCopyFilesProcess(ConfigurationRoot);
@@ -168,7 +178,7 @@ namespace ApplicationUpdater
                 StartUpdateProcess,
                 PrepareEnviroment,
                 Unzip,
-                CheckVersion,
+                MiniReleaseCheckVersion,
                 MakeBackup,
                 MiniReleaseCopyFiles
             };
