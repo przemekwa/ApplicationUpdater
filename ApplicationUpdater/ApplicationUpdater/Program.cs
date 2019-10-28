@@ -84,9 +84,9 @@ namespace ApplicationUpdater
 
                 var line = $"{header}   {consoleWriteProcess.Msg}";
 
-                if (line.Length > Console.WindowWidth)
+                if (line.Length >= (Console.WindowWidth - 1))
                 {
-                    line = line.Substring(0, Console.WindowWidth);
+                    line = line.Substring(0, (Console.WindowWidth - 2));
                 }
              
                 Console.WriteLine(line);

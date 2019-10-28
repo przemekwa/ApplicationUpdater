@@ -49,6 +49,14 @@ namespace ApplicationUpdater
                                         s.UpdateEvent += UpdateEvent;
                                     });
                     break;
+                 case "Mini":
+                    Kernel.Bind<IUpdateProcess>().To<MiniReleaseApplicationUpdateStrategy>().OnActivation(s =>
+                                    {
+                                        s.ConfirmEvent += ConfirmEvent;
+                                        s.ResultEvetnt += ResultEvetnt;
+                                        s.UpdateEvent += UpdateEvent;
+                                    });
+                    break;
 
                 default:
                     throw new Exception("No proper strategy set");
