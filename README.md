@@ -3,30 +3,30 @@ ApplicationUpdater (to update manualy application on IIS server)
 
 ### Szybki start
 
-Aplikacja s³u¿y do aktualizacji folderów i wykonywania dodatkowych czynnoœæi podczas tego procesu. Na przyk³ad: zanim zrobi aktualizacjê folderu najpierw sprawdzi czy pliki podmieniane s¹ w nowszej wersji ni¿ te, które maj¹ zostaæ podmienione, zrobi automatyczny backup folderu itd. Sczegó³y poni¿ej. Aplikacja jest przetestowana i dobrze wygrzana na ponad 20 serwerach. Aplikacji nie potrzeba instalowaæ, jest to "wszystko zawieraj¹ca paczka". Zawiera .NET Cora 3.0 i aplikacjê. 
+Aplikacja sÅ‚uÅ¼y do aktualizacji folderÃ³w i wykonywania dodatkowych czynnoÅ›Ä‡i podczas tego procesu. Na przykÅ‚ad: zanim zrobi aktualizacjÄ™ folderu najpierw sprawdzi czy pliki podmieniane sÄ… w nowszej wersji niÅ¼ te, ktÃ³re majÄ… zostaÄ‡ podmienione, zrobi automatyczny backup folderu itd. SczegÃ³Å‚y poniÅ¼ej. Aplikacja jest przetestowana i dobrze wygrzana na ponad 20 serwerach. Aplikacji nie potrzeba instalowaÄ‡, jest to "wszystko zawierajÄ…ca paczka". Zawiera .NET Cora 3.0 i aplikacjÄ™. 
 
-### Parametry wywo³ania
+### Parametry wywoÅ‚ania
 
 
-ApplicationUpdater to konsolowa aplikacja, któr¹ wywo³uje siê podaj¹c szereg paametrów wywo³ania. Zalecanty sposób obs³ugi to utworzyæ plik *.bat, który bedzie nazywa³ siê np: update-prod.bat i bêdzie zawiera³ parametry wywo³ania. Generalnie parametry per serwer s¹ sta³e.
+ApplicationUpdater to konsolowa aplikacja, ktÃ³rÄ… wywoÅ‚uje siÄ™ podajÄ…c szereg paametrÃ³w wywoÅ‚ania. Zalecanty sposÃ³b obsÅ‚ugi to utworzyÄ‡ plik *.bat, ktÃ³ry bedzie nazywaÅ‚ siÄ™ np: update-prod.bat i bÄ™dzie zawieraÅ‚ parametry wywoÅ‚ania. Generalnie parametry per serwer sÄ… staÅ‚e.
 
-Parametry(wartoœci) s¹ podawane po spacji. Œcie¿ki mogê byæ w cudzys³owiach.
+Parametry(wartoÅ›ci) sÄ… podawane po spacji. ÅšcieÅ¼ki mogÄ™ byÄ‡ w cudzysÅ‚owiach.
 
-| Nazwa parametru  | Czy obowi¹zkowy?  |  Wartoœci  | Opis  |
+| Nazwa parametru  | Czy obowiÄ…zkowy?  |  WartoÅ›ci  | Opis  |
 |---|---|---|---|
-|  Strategy |  Tak | Selgros,Orlen   | Pojedyñcze strategie, które ró¿ni¹ siê kolejnoœæi¹ wykonywanych opercji jak i samymi operacjami.  | 
-| PathToZipFile  |Tak  | "d:/aapap.zip"   |Œcie¿ka do pliku zip z folderem do podmiany   |   
-| BackupDirectory  | Tak  | "d:/Backup"  | Œcie¿ka do folderu, gdzie bêd¹ umieszczone kopie zapasowe  |   
-| IntepubDirectory  | Tak  | "d:/Intepub/wwwwroot"  | Œcie¿ka do folderu, gdzie pliki bêd¹ podmieniane  |   
-| Version  | Tak  | "99.543"  | Identyfikator wersji, który zostanie umieszczony w web.config  |   
-| IsUndoProcess  | Tak  | true,false  | Prze³¹cznik informuj¹cy czy wykonaæ proces odwrotny czyli odzwyskanie z kopi zapasowej.  |   
+|  Strategy |  Tak | Selgros,Orlen,MiniRelease   | PojedyÅ„cze strategie, ktÃ³re rÃ³Å¼niÄ… siÄ™ kolejnoÅ›Ä‡iÄ… wykonywanych opercji jak i samymi operacjami.  | 
+| PathToZipFile  |Tak  | "d:/aapap.zip"   |ÅšcieÅ¼ka do pliku zip z folderem do podmiany   |   
+| BackupDirectory  | Tak  | "d:/Backup"  | ÅšcieÅ¼ka do folderu, gdzie bÄ™dÄ… umieszczone kopie zapasowe  |   
+| IntepubDirectory  | Tak  | "d:/Intepub/wwwwroot"  | ÅšcieÅ¼ka do folderu, gdzie pliki bÄ™dÄ… podmieniane  |   
+| Version  | Tak  | "99.543"  | Identyfikator wersji, ktÃ³ry zostanie umieszczony w web.config  |   
+| IsUndoProcess  | Tak  | true,false  | PrzeÅ‚Ä…cznik informujÄ…cy czy wykonaÄ‡ proces odwrotny czyli odzwyskanie z kopi zapasowej. Zostanie wykonana operacja przywrÃ³cenia ostatniej produkcyjnej wersji. |   
 
 
 ### Zaimplementowane kroki
 
-Aplikacja mo¿e wykoaæ klikanaœcie czynnoœæi. S¹ to: stworzenie folderu kopi zapasowej, wypakowanie do niego pliku *.zip, porównanie plików wypakowanych z nadpisywanymi, wykonanie kopi zapasowej œcie¿ki docelowej(InetpubDirecotry), wykonanie kopiowania, podmiana klucza w web.config-u.
+Aplikacja moÅ¼e wykoaÄ‡ klikanaÅ›cie czynnoÅ›Ä‡i. SÄ… to: stworzenie folderu kopi zapasowej, wypakowanie do niego pliku *.zip, porÃ³wnanie plikÃ³w wypakowanych z nadpisywanymi, wykonanie kopi zapasowej Å›cieÅ¼ki docelowej(InetpubDirecotry), wykonanie kopiowania, podmiana klucza w web.config-u.
 
-### Opis króków
+### Opis krÃ³kÃ³w
 
 cdn.
 
