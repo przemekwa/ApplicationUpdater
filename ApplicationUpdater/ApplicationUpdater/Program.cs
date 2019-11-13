@@ -1,4 +1,5 @@
 ﻿using ApplicationUpdater.Processes;
+using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +18,17 @@ namespace ApplicationUpdater
             Consts.Header.WriteHeader();
             Console.CursorVisible = false;
 
-            var updateModel = GetUpdateModel(args);
+            var updateModel = new UpdateModel();
+
+            var result = Parser.Default.ParseArguments<UserParams>(args)
+                    .WithParsed(o =>
+                    {
+                        updateModel.UserParams = o;
+                    })
+                    .WithNotParsed(errorList =>
+                    {
+                        Environment.Exit(100);
+                    });
 
             var di = new Di(null, ConsoleEvent, GetConfirmation, RezultEvent);
 
@@ -131,29 +142,6 @@ namespace ApplicationUpdater
             Console.WriteLine(pc.Key.ToString());
 
             Console.ForegroundColor = ConsoleColor.Gray;
-        }
-
-        private static UpdateModel GetUpdateModel(string[] args)
-        {
-            if (args.Length != 6)
-            {
-                throw new ArgumentException("No suitable parameters. Details on https://github.com/przemekwa/ApplicationUpdater");
-            }
-
-            var updateModel = new UpdateModel
-            {
-                UserParams = new UserParams
-                {
-                    Strategy = GetParam(args, 0, "Strategy"),
-                    PathToZipFile = new FileInfo(GetParam(args, 1, "PathToZipFile")),
-                    BackupDirectory = new DirectoryInfo(GetParam(args, 2, "BackupDirectory")),
-                    IntepubDirectory = GetInetpubDirectory(args),
-                    Version = GetParam(args, 4, "Version"),
-                    IsUndoProcess = bool.Parse(GetParam(args, 5, "IsUndoProcess")),
-                }
-            };
-
-            return updateModel;
         }
 
         private static DirectoryInfo GetInetpubDirectory(string[] args)
