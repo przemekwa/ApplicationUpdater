@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace ApplicationUpdater
 {
@@ -27,7 +28,7 @@ namespace ApplicationUpdater
                 Console.WriteLine(@" /~~\ |    |    |___ | \__, /~~\  |  | \__/ | \|       ");
                 Console.WriteLine(@"              __   __       ___  ___  __               ");
                 Console.WriteLine(@"       |   | |__) |  \  /\   |  |__  |__)              ");
-                Console.WriteLine(@"       \__ / |    |__/ /~~\  |  |___ |  \              v6.05");
+                Console.WriteLine($@"       \__ / |    |__/ /~~\  |  |___ |  \              v{Assembly.GetEntryAssembly().GetName().Version}");
                 Console.WriteLine();
             }
         }
