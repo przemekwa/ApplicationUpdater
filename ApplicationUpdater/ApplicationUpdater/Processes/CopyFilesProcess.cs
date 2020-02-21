@@ -1,4 +1,6 @@
-﻿namespace ApplicationUpdater.Processes
+﻿using System.IO;
+
+namespace ApplicationUpdater.Processes
 {
     public class CopyFilesProcess : ProcessBase
     {
@@ -12,10 +14,21 @@
             {
                 return GetProcesEventResult(Consts.ProcesEventResult.Skip);
             }
+            var countAll = CountAll(new DirectoryInfo(model.NewApplicationDirectory.FullName));
 
-            CopyAll(0, 100,model.NewApplicationDirectory.FullName, model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
+           
 
-          
+
+            CopyAll(
+                0, 
+                countAll,
+                model.NewApplicationDirectory.FullName,
+                model.NewApplicationDirectory,
+               new DirectoryInfo(model.UserParams.IntepubDirectory.FullName),
+               true,
+               "",
+               null);
+
             return GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
     }

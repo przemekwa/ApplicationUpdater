@@ -3,6 +3,7 @@ using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
@@ -19,9 +20,6 @@ namespace ApplicationUpdater
 
         static void Main(string[] args)
         {
-
-
-
             Consts.Header.WriteHeader();
             Console.CursorVisible = false;
 
@@ -123,6 +121,7 @@ namespace ApplicationUpdater
                 {
                     Thread.Sleep(200);
                     progressBar.Dispose();
+                    progressBar = null;
                     Console.WriteLine();
                 }
             }
