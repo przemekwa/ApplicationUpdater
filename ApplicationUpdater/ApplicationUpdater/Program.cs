@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ApplicationUpdater
 {
@@ -13,8 +15,13 @@ namespace ApplicationUpdater
         [DllImport("libc")]
         public static extern uint getuid();
 
+        public static ProgressBar progressBar { get; set; }
+
         static void Main(string[] args)
         {
+
+
+
             Consts.Header.WriteHeader();
             Console.CursorVisible = false;
 
@@ -36,9 +43,9 @@ namespace ApplicationUpdater
 
             try
             {
-                #if !DEBUG
+#if !DEBUG
                 RequireAdministrator();
-                #endif
+#endif
                 Console.WriteLine(updateModel.UserParams.ToString());
                 Console.WriteLine();
 
@@ -50,7 +57,7 @@ namespace ApplicationUpdater
             }
             catch (Exception e)
             {
-                 ConsoleEvent(new ConsoleWriteProcess{Msg= $"[ERROR] {e.Message}",NewLine= true }, null);
+                ConsoleEvent(new ConsoleWriteProcess { Msg = $"[ERROR] {e.Message}", NewLine = true }, null);
             }
 
             Console.WriteLine();
@@ -79,15 +86,15 @@ namespace ApplicationUpdater
         {
             Console.CursorVisible = false;
             var consoleWriteProcess = sender as ConsoleWriteProcess;
-            
+
             if (consoleWriteProcess.NewLine)
             {
                 Console.WriteLine($"{GetStopWatchString(DateTime.Now)}   {consoleWriteProcess.Msg}");
             }
             else if (consoleWriteProcess.OneLineMode)
             {
-                var top = Console.CursorTop-1;
-                
+                var top = Console.CursorTop - 1;
+
                 Console.SetCursorPosition(0, top);
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, top);
@@ -100,8 +107,24 @@ namespace ApplicationUpdater
                 {
                     line = line.Substring(0, (Console.WindowWidth - 2));
                 }
-             
+
                 Console.WriteLine(line);
+            }
+            else if (consoleWriteProcess.ShowProgress)
+            {
+                if (progressBar == null)
+                {
+                    progressBar = new ProgressBar(consoleWriteProcess.Msg);
+                }
+                
+                progressBar.Report(consoleWriteProcess.StepNumberProgress / consoleWriteProcess.MaxProgress);
+                
+                if (consoleWriteProcess.StepNumberProgress == consoleWriteProcess.MaxProgress)
+                {
+                    Thread.Sleep(200);
+                    progressBar.Dispose();
+                    Console.WriteLine();
+                }
             }
             else
             {

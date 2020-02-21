@@ -51,21 +51,36 @@ namespace ApplicationUpdater.Processes
         {
             var p = new ConsoleWriteProcess
             {
-                Msg = $"[{this.Name}] {msg}" ,
+                Msg = $"[{this.Name}] {msg}",
                 NewLine = isNewLine,
                 OneLineMode = oneLine
             };
 
             ProcessEvent(p, new EventArgs { });
+        }  
+        
+        protected virtual void UpdateProcessWithPgoressBar(double stepNumberProgress, double maxProgress,   string msg, bool isNewLine = true, bool oneLine = false)
+        {
+            var p = new ConsoleWriteProcess
+            {
+                Msg = $"[{this.Name}] " ,
+                NewLine = isNewLine,
+                OneLineMode = oneLine,
+                SetNewProgress = false,
+                ShowProgress = true,
+                StepNumberProgress = stepNumberProgress,
+                MaxProgress = maxProgress
+            };
+
+            ProcessEvent(p, new EventArgs { });
         }
 
-        protected virtual void CopyAll(string rootsourcePath, DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat, IEnumerable<string> excludePath = null)
+        protected virtual double CopyAll(double count, double maxProgress, string rootsourcePath, DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat, IEnumerable<string> excludePath = null)
         {
             Directory.CreateDirectory(target.FullName);
 
             foreach (FileInfo fi in source.GetFiles())
             {
-                //[TODO] Musi to byc bardziej zaawansowane. Wildcards
                 if (excludePath != null && excludePath.Any(s => fi.FullName.Contains(s)))
                 {
                     continue;
@@ -73,19 +88,40 @@ namespace ApplicationUpdater.Processes
 
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
 
-                UpdateProcess(string.Format(msgFormat, fi.FullName.Replace(rootsourcePath, string.Empty)), false, true);
+                UpdateProcessWithPgoressBar(++count, maxProgress, "", false);
             }
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
             {
                 var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(rootsourcePath, diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
+                count = CopyAll(count, maxProgress, rootsourcePath, diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
             }
 
-              
+            return count;
         }
 
-        public IEnumerable<string> GetExcludeFiles(string intepubDirectoryPath)
+        protected virtual int CountAll(DirectoryInfo source, IEnumerable<string> excludePath = null)
+        {
+            var count = 0;
+
+            foreach (FileInfo fi in source.GetFiles())
+            {
+                if (excludePath != null && excludePath.Any(s => fi.FullName.Contains(s)))
+                {
+                    continue;
+                }
+                count++;
+            }
+
+            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+            {
+                count+= CountAll(diSourceSubDir, excludePath);
+            }
+
+            return count;
+        }
+
+            public IEnumerable<string> GetExcludeFiles(string intepubDirectoryPath)
         {
             return ConfigurationRoot
                   .GetSection("CheckVersionProcess.ExcludeDirectories")

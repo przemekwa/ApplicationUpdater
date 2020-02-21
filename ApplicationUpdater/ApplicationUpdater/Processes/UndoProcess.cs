@@ -34,7 +34,7 @@ namespace ApplicationUpdater.Processes
                 throw new Exception($"There is no substitution application in the catalog {pathToOldApplication}");
             }
 
-            CopyAll(pathToOldApplication.FullName, pathToOldApplication, model.UserParams.IntepubDirectory, true, "Copy file: {0}");
+            CopyAll(0,100, pathToOldApplication.FullName, pathToOldApplication, model.UserParams.IntepubDirectory, true, "Copy file: {0}");
         }
 
         private void SetLastUpdatePath(UpdateModel model)

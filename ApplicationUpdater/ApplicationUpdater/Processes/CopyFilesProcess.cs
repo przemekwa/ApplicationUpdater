@@ -13,7 +13,7 @@
                 return GetProcesEventResult(Consts.ProcesEventResult.Skip);
             }
 
-            CopyAll(model.NewApplicationDirectory.FullName, model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
+            CopyAll(0, 100,model.NewApplicationDirectory.FullName, model.NewApplicationDirectory, model.UserParams.IntepubDirectory, true, "Update file: {0}");
 
           
             return GetProcesEventResult(Consts.ProcesEventResult.Successful);
