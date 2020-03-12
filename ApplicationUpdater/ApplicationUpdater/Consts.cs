@@ -23,11 +23,11 @@ namespace ApplicationUpdater
         {
             public static void WriteHeader()
             {
-                Console.WriteLine(@"       __   __          __       ___    __             ");
-                Console.WriteLine(@"  /\  |__) |__) |    | /  `  /\   |  | /  \ |\ |       ");
-                Console.WriteLine(@" /~~\ |    |    |___ | \__, /~~\  |  | \__/ | \|       ");
-                Console.WriteLine(@"              __   __       ___  ___  __               ");
-                Console.WriteLine(@"       |   | |__) |  \  /\   |  |__  |__)              ");
+                 Console.WriteLine(@"       __   __          __       ___    __             ");
+                 Console.WriteLine(@"  /\  |__) |__) |    | /  `  /\   |  | /  \ |\ |       ");
+                 Console.WriteLine(@" /~~\ |    |    |___ | \__, /~~\  |  | \__/ | \|       ");
+                 Console.WriteLine(@"              __   __       ___  ___  __               ");
+                 Console.WriteLine(@"       |   | |__) |  \  /\   |  |__  |__)              ");
                 Console.WriteLine($@"       \__ / |    |__/ /~~\  |  |___ |  \              v{Assembly.GetEntryAssembly().GetName().Version}");
                 Console.WriteLine();
             }
