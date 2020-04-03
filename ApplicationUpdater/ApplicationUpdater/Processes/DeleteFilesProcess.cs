@@ -36,7 +36,7 @@ namespace ApplicationUpdater.Processes
                     continue;
                 }
 
-                UpdateProcess($"Delete directory {directoryInfo.FullName}", false, true);
+                UpdateProcess($"Delete directory {directoryInfo.FullName}", true, false);
             }
 
 

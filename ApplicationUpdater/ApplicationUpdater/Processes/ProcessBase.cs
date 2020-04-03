@@ -85,7 +85,8 @@ namespace ApplicationUpdater.Processes
                 {
                     continue;
                 }
-
+                
+                File.SetAttributes(fi.FullName, FileAttributes.Normal);
                 fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
 
                 UpdateProcessWithPgoressBar(++count, maxProgress, "", false);
