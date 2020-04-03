@@ -25,6 +25,8 @@ namespace ApplicationUpdater.Processes
                 .SingleOrDefault(s => s.Name == $"{offLineFileName}");
 
             File.Copy(file.FullName, Path.Combine(file.DirectoryName, $"_{offLineFileName}"));
+            
+            File.SetAttributes(file.FullName, FileAttributes.Normal);
             File.Delete(file.FullName);
 
             return GetProcesEventResult(Consts.ProcesEventResult.Successful);

@@ -27,6 +27,7 @@ namespace ApplicationUpdater.Processes
             {
                 try
                 {
+                    File.SetAttributes(directoryInfo.FullName, FileAttributes.Normal);
                     directoryInfo.Delete(true);
                 }
                 catch (System.Exception e)
@@ -35,7 +36,7 @@ namespace ApplicationUpdater.Processes
                     continue;
                 }
 
-                UpdateProcess($"Delete file {directoryInfo.FullName}", false, true);
+                UpdateProcess($"Delete directory {directoryInfo.FullName}", false, true);
             }
 
 

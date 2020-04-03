@@ -30,29 +30,12 @@ namespace ApplicationUpdater.Processes
             }
 
             File.Copy(fileOffLine.FullName, Path.Combine(fileOffLine.DirectoryName, "app_offline.htm"));
+            File.SetAttributes(fileOffLine.FullName, FileAttributes.Normal);
             File.Delete(fileOffLine.FullName);
 
             UpdateProcess($"Switched application into OFFLINE mode");
 
             return GetProcesEventResult("Successful");
-
         }
-
-        //private void UpdateDateTimeInFile(FileInfo file)
-        //{
-        //    var lines = File.ReadAllLines(file.FullName);
-
-        //    var index = lines.Select((s, i) => new { i, s })
-        //        .Where(t => t.s.Contains(searchPattern))
-        //        .Select(t => t.i)
-        //        .First();
-
-        //    var dateTimeValue = DateTime.Now.AddMinutes(3).ToString("HH:mm");
-
-        //    lines[index] = $"Trwa aktualizacja danych. Do godz. {dateTimeValue} NPG bedzie niedostepny. <br/><br/> W naglych przypadkach prosze o kontakt pod numerem: 695 877 795";
-
-        //    File.WriteAllLines(Path.Combine(file.DirectoryName, "app_offline.htm"), lines);
-           
-        //}
     }
 }
