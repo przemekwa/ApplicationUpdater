@@ -1,6 +1,8 @@
 # ApplicationUpdater
 ApplicationUpdater (to update manualy application on IIS server)
 
+![.NET Core](https://github.com/przemekwa/ApplicationUpdater/workflows/.NET%20Core/badge.svg)
+
 ### Szybki start
 
 Aplikacja służy do aktualizacji folderów i wykonywania dodatkowych czynnośći podczas tego procesu. Na przykład: zanim zrobi aktualizację folderu najpierw sprawdzi czy pliki podmieniane są w nowszej wersji niż te, które mają zostać podmienione, zrobi automatyczny backup folderu itd. Sczegóły poniżej. Aplikacja jest przetestowana i dobrze wygrzana na ponad 20 serwerach. Aplikacji nie potrzeba instalować, jest to "wszystko zawierająca paczka". Zawiera .NET Cora 3.0 i aplikację. 
