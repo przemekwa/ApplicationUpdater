@@ -15,3 +15,5 @@ jobs:
         dotnet-version: 3.1
     - name: Build with dotnet
       run: dotnet build ApplicationUpdater --configuration Release
+    - name: Publish
+      run: dotnet publish -c Release --output $(Build.ArtifactStagingDirectory)  -r win10-x64'    
