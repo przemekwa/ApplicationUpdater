@@ -75,9 +75,11 @@ namespace ApplicationUpdater.Processes
             ProcessEvent(p, new EventArgs { });
         }
 
-        protected virtual double CopyAll(double count, double maxProgress, string rootsourcePath, DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat, IEnumerable<string> excludePath = null)
+        protected virtual Tuple<double,List<string>> CopyAll(double count, double maxProgress, string rootsourcePath, DirectoryInfo source, DirectoryInfo target, bool overrideFile, string msgFormat, IEnumerable<string> excludePath = null)
         {
             Directory.CreateDirectory(target.FullName);
+
+            var listError = new List<string>();
 
             foreach (FileInfo fi in source.GetFiles())
             {
@@ -87,7 +89,18 @@ namespace ApplicationUpdater.Processes
                 }
                 
                 File.SetAttributes(fi.FullName, FileAttributes.Normal);
-                fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
+
+                try
+                {
+                    fi.CopyTo(Path.Combine(target.FullName, fi.Name), overrideFile);
+                }
+                catch (Exception e)
+                {
+                    UpdateProcessWithPgoressBar(++count, maxProgress, e.Message, false);
+                    listError.Add($"File {fi.Name} error {e.Message}");
+
+                    continue;
+                }
 
                 UpdateProcessWithPgoressBar(++count, maxProgress, "", false);
             }
@@ -95,10 +108,13 @@ namespace ApplicationUpdater.Processes
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
             {
                 var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                count = CopyAll(count, maxProgress, rootsourcePath, diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
+                (var countTemp, var listErrorTemp) = CopyAll(count, maxProgress, rootsourcePath, diSourceSubDir, nextTargetSubDir, overrideFile, msgFormat, excludePath);
+
+                count = countTemp;
+                listError.AddRange(listErrorTemp);
             }
 
-            return count;
+            return new Tuple<double, List<string>>(count, listError);
         }
 
         protected virtual int CountAll(DirectoryInfo source, IEnumerable<string> excludePath = null)

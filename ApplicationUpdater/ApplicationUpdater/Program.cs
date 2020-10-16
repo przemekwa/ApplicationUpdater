@@ -28,7 +28,11 @@ namespace ApplicationUpdater
             var result = Parser.Default.ParseArguments<UserParams>(args)
                     .WithParsed(o =>
                     {
+                        o.IntepubDirectory = RemoveSlashAndBackSlash(o.IntepubDirectory.FullName);
+                        o.BackupDirectory = RemoveSlashAndBackSlash(o.BackupDirectory.FullName);
+
                         updateModel.UserParams = o;
+
                     })
                     .WithNotParsed(errorList =>
                     {
@@ -166,16 +170,14 @@ namespace ApplicationUpdater
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        private static DirectoryInfo GetInetpubDirectory(string[] args)
+        private static DirectoryInfo RemoveSlashAndBackSlash(string path)
         {
-            var param = GetParam(args, 3, "IntepubDirectory");
-
-            if (param[^1] == '/' || param[^1] == '\\')
+            if (path[^1] == '/' || path[^1] == '\\')
             {
-                param = param[0..^1];
+                path = path[0..^1];
             }
 
-            return new DirectoryInfo(param);
+            return new DirectoryInfo(path);
         }
 
         private static string GetParam(string[] args, int index, string name)

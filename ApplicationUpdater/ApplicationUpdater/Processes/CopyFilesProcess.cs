@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 
 namespace ApplicationUpdater.Processes
 {
@@ -14,12 +15,10 @@ namespace ApplicationUpdater.Processes
             {
                 return GetProcesEventResult(Consts.ProcesEventResult.Skip);
             }
+            
             var countAll = CountAll(new DirectoryInfo(model.NewApplicationDirectory.FullName));
 
-           
-
-
-            CopyAll(
+            var result = CopyAll(
                 0, 
                 countAll,
                 model.NewApplicationDirectory.FullName,
@@ -29,7 +28,12 @@ namespace ApplicationUpdater.Processes
                "",
                null);
 
-            return GetProcesEventResult(Consts.ProcesEventResult.Successful);
+            foreach (var errorMsg in result.Item2)
+            {
+                UpdateProcess(errorMsg);
+            }
+
+            return result.Item2.Any() ? GetProcesEventResult(Consts.ProcesEventResult.Error): GetProcesEventResult(Consts.ProcesEventResult.Successful);
         }
     }
 }
