@@ -22,6 +22,7 @@ namespace ApplicationUpdater.Processes
             Directory.CreateDirectory(unZipDirectory);
 
             UpdateProcess($"Unzip {model.UserParams.PathToZipFile.FullName} to {unZipDirectory}");
+
             UnZip(model, unZipDirectory);
 
             model.UnZipDirectory = new DirectoryInfo(unZipDirectory);
@@ -41,7 +42,6 @@ namespace ApplicationUpdater.Processes
             var archive = ArchiveFactory.Open(model.UserParams.PathToZipFile.FullName);
 
             var maxProgress = archive.Entries.ToList().Count;
-
             var count = 0;
 
             foreach (var entry in archive.Entries)
@@ -51,7 +51,7 @@ namespace ApplicationUpdater.Processes
                     entry.WriteToDirectory(unZipDirectory, new ExtractionOptions() { ExtractFullPath = true, Overwrite = true });
                 }
 
-                UpdateProcessWithPgoressBar(++count, maxProgress, string.Empty, false);
+                UpdateProcessWithPgoressBar(++count, maxProgress, "", false);
             }
         }
     }

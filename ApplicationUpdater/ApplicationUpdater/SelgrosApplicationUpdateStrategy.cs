@@ -151,6 +151,16 @@ namespace ApplicationUpdater
             ResultEvetnt(process.Process(updateModel), null);
         }
 
+        public void IsFilesBlocked(UpdateModel updateModel)
+        {
+            var process = new IsFilesBlockedProcess(ConfigurationRoot, environmentManager);
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            ResultEvetnt(process.Process(updateModel), null);
+        }
+
         public IEnumerable<Action<UpdateModel>> GetProcess(UpdateModel updateModel)
         {
             if (updateModel.UserParams.IsUndoProcess)
@@ -172,6 +182,7 @@ namespace ApplicationUpdater
                 MakeBackup,
                 SetOffline,
                 DeleteFiles,
+                IsFilesBlocked,
                 CopyFiles,
                 VerifyCopy,
                 EditWebConfig,

@@ -35,6 +35,16 @@ namespace ApplicationUpdater
             ResultEvetnt(process.Process(updateModel), null);
         }
 
+        public void IsFilesBlocked(UpdateModel updateModel)
+        {
+            var process = new IsFilesBlockedProcess(ConfigurationRoot, environmentManager);
+
+            process.ProcessEvent += ProcessEvent;
+            process.ConfirmEvent += ConfirmEvent;
+
+            ResultEvetnt(process.Process(updateModel), null);
+        }
+
         public void CheckVersion(UpdateModel updateModel)
         {
             var process = new CheckVersionProcess(ConfigurationRoot, environmentManager);
@@ -152,6 +162,7 @@ namespace ApplicationUpdater
                 Unzip,
                 CheckVersion,
                 MakeBackup,
+                IsFilesBlocked,
                 DeleteFiles,
                 CopyFiles,
                 VerifyCopy,
